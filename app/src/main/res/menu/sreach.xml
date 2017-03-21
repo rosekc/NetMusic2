@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/search_src_text"
+        android:title="搜索"
+        android:icon="@mipmap/actionbar_sreach"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionLayout="@layout/actionbar_sreach" />
+</menu>

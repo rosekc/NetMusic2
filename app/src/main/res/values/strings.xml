@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">网易云音乐</string>
+    <string name="navigation_drawer_open">打开抽屉</string>
+    <string name="navigation_drawer_close">关闭抽屉</string>
+    <string name="music">我的</string>
+    <string name="musicmenu">发现</string>
+    <string name="commity">动态</string>
+    <string name="commend">个性推荐</string>
+    <string name="menu">歌单</string>
+    <string name="radio">主播电台</string>
+    <string name="rank">排行榜</string>
+    <string name="modelnight">夜间模式</string>
+    <string name="setting">设置</string>
+    <string name="exit">退出</string>
+    <string name="username">用户名_1234567</string>
+    <string name="have_reg">已签到</string>
+    <string name="no_reg">点击签到</string>
+</resources>
