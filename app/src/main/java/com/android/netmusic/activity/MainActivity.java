@@ -6,7 +6,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
@@ -14,13 +13,16 @@ import com.android.netmusic.R;
 import com.android.netmusic.adapter.MainFragmentAdapter;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
+    //ViewPage
     private ViewPager mViewPager;
+    //ViewPage的适配器
     private MainFragmentAdapter mMainFragmentAdapter;
+    //ToolBar
     private Toolbar mToolbar;
+    //TabLayout
     private TabLayout mTabLayout;
-    public String tes = "nihao";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         initViewPage();
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //初始化界面UI布局///////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * 初始化主界面ViewPage
      */
@@ -108,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.sreach, menu);
         return true;
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //以下是各组员添加代码,添加代码注明功能,自己的姓名                                              //
@@ -116,4 +123,28 @@ public class MainActivity extends AppCompatActivity {
     //获取主Activity中的数据,直接调用mActivity                                                    //
     //PS，如非必须，请不要修改其他代码,如果非得修改，请注释原因                                      //
     //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //以下是音乐播放服务的回调方法//////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //回调方法,更新进度
+    @Override
+    public void publish(int progress) {
+
+    }
+
+    //回调方法，更新播放的歌曲
+    @Override
+    public void change(int position) {
+
+    }
+
+    //回调方法,更新状态
+    @Override
+    public void changeForState(int position) {
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 }
