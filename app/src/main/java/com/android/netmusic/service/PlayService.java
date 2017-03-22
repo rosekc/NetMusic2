@@ -69,7 +69,6 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         mediaPlayer.setOnErrorListener(this);
         mp3Infos = MediaUtils.getMp3Infos(this);
         es.execute(updateStatusRunnable);
-
         //注册广播
 //        MyReceiver myReceiver = new MyReceiver();
 //        IntentFilter intentFilter = new IntentFilter();
@@ -193,6 +192,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
             if (musicUpdateListener != null) {
                 musicUpdateListener.onChange(currentPosition);
+                musicUpdateListener.onChangeForState(currentPosition);
             }
             //showNotification();
         }
@@ -388,6 +388,30 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         this.play_mode = play_mode;
     }
 
+    /**
+     * 得到播放列表最大歌曲数目
+     * @return
+     */
+    public int getMaxCount(){
+        return mp3Infos.size();
+    }
+
+    /**
+     * 得到当前正在播放的歌曲实例
+     * @param currentPosition
+     * @return
+     */
+    public Mp3Info getCurrentMp3(int currentPosition){
+        return mp3Infos.get(currentPosition);
+    }
+
+    /**
+     * 判断当前是否暂停
+     * @return
+     */
+    public boolean isPasue(){
+        return isPause;
+    }
 
     /**
      * 判断播放列表是否为空
