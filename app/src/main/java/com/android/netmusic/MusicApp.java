@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.android.netmusic.constant.Constant;
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMOptions;
 import com.lidroid.xutils.DbUtils;
 
 
@@ -31,8 +29,8 @@ public class MusicApp extends Application {
         dbUtilsRecord = DbUtils.create(getApplicationContext(), Constant.RECORD_DB);
         dbUtilsLike = DbUtils.create(getApplicationContext(),Constant.LIKE_DB);
         context = getApplicationContext();
-        //QQ登陆相关
-        EMOptions options = new EMOptions();
-        EMClient.getInstance().init(context,options);
+        //环信相关
+        //EMOptions options = new EMOptions();
+        //EMClient.getInstance().init(context,options);
     }
 }
