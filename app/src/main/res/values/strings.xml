@@ -15,4 +15,17 @@
     <string name="username">用户名_1234567</string>
     <string name="have_reg">已签到</string>
     <string name="no_reg">点击签到</string>
+
+
+    <string name="Is_the_registered">Registering..</string>
+    <string name="Two_input_password">Inconsistent password, please enter again!</string>
+    <string name="Confirm_password_cannot_be_empty">Confirm password cannot be empty!</string>
+    <string name="Password_cannot_be_empty">Password cannot be empty!</string>
+    <string name="User_name_cannot_be_empty">User name cannot be empty!</string>
+    <string name="Registration_failed">Registration failed</string>
+    <string name="illegal_user_name">Illegal user name</string>
+    <string name="registration_failed_without_permission">Registration failed, without permission!</string>
+    <string name="User_already_exists">User already existed!</string>
+    <string name="network_anomalies">Network is not available, please check the network!</string>
+    <string name="Registered_successfully">Registered successfully</string>
 </resources>
