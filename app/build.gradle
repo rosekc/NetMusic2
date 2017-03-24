@@ -19,8 +19,8 @@ android {
     }
     productFlavors {
     }
-    //useLibrary 'org.apache.http.legacy'
 }
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -28,11 +28,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('libs/open_sdk_r5785.jar')
-    compile files('libs/hyphenatechat_3.3.0.jar')
     compile files('libs/xUtils-2.6.2.jar')
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support:support-v4:25.3.0'
     compile 'com.android.support:design:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+    compile files('src/main/jniLibs/hyphenatechat_3.3.0.jar')
 }

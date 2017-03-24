@@ -57,5 +57,11 @@
         <item name="android:tint">@color/black</item>
     </style>
 
+    <!--聊天信息时间-->
+    <style name="chat_msgtime">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">15dp</item>
+    </style>
 
 </resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/chat_msg_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/chatqipao"
+        android:lineSpacingExtra="8dp"
+        android:text="啊士大夫受到广泛啊受到广泛的是符合规范的环境速度放缓的建行卡vs发货的几个房间看是大概何时答复jfk价格还三打哈大法官"
+        android:textColor="#000000"
+        android:textSize="15dp" />
+
+    <TextView
+        style="@style/chat_msgtime"
+        android:gravity="center|left" />
+</LinearLayout>
