@@ -42,6 +42,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
@@ -54,13 +55,7 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <activity android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+
 
 
         <activity
@@ -116,5 +111,19 @@
             android:name=".service.PlayService"
             android:enabled="true"
             android:exported="true"></service>
+
+        <!--本地音乐-->
+        <activity android:name=".activity.LocalMusicActivity"/>
+        <activity android:name=".activity.PlayBarBaseActivity"/>
+        <activity android:name=".activity.PlayBoxActivity"
+            android:theme="@style/MyFullScreenTheme"/>
+
+        <activity android:name=".activity.SplashActivity"
+                  android:theme="@style/MyFullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

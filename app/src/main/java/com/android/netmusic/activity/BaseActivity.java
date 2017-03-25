@@ -18,18 +18,21 @@ import com.android.netmusic.service.PlayService;
  * Created by jiaoml on 2017/3/22.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
     //获取MusicApp实例
     private MusicApp app;
     //音乐播放服务
-    public PlayService playService;
+    public static PlayService playService;
     //判断是否服务绑定过
-    public boolean isBound = false;
+    public static boolean isBound = false;
+
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = (MusicApp) getApplication();
+        //Toast.makeText(this,view.getId()+"", Toast.LENGTH_SHORT).show();
     }
+
     private ServiceConnection conn = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -96,4 +99,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         editor.putLong("sumTime", sumTime);
         editor.commit();
     }
+
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
 }

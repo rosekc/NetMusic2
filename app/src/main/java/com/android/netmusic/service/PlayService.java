@@ -284,6 +284,16 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     }
 
     /**
+     * 通知所有含有播放栏的Activity更新组件状态
+     */
+    public void notifyall222(){
+        if(musicUpdateListener!=null){
+            musicUpdateListener.onChange(currentPosition);
+            musicUpdateListener.onChangeForState(currentPosition);
+        }
+    }
+
+    /**
      * 更新状态的接口
      */
     public interface MusicUpdateListener {
