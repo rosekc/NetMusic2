@@ -2,6 +2,8 @@ package com.android.netmusic.activity;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Selection;
@@ -23,6 +25,7 @@ import android.widget.SimpleAdapter;
 import com.android.netmusic.R;
 import com.android.netmusic.adapter.ChatMsgAdapter;
 import com.android.netmusic.utils.InputMethodUtils;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -35,6 +38,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.android.netmusic.adapter.ChatMsgAdapter.emojiId;
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiName;
 
 public class ChatActivity extends AppCompatActivity {
@@ -43,7 +47,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button sendBtn;
     private GridView emoiconGridView;
     private ListView messageListView;
-    private String contactName = "b";
+    private String contactName = "a";
     private EMConversation conversation;
     private ChatMsgAdapter chatMsgAdapter;
 
@@ -79,11 +83,10 @@ public class ChatActivity extends AppCompatActivity {
             //收到消息
             for (EMMessage message : messages) {
                 if (message.getUserName() == contactName) {
-                    conversation.appendMessage(message);
-                    //更新adapter中信息数据
-                    chatMsgAdapter.notifyDataSetChanged();
-                    //设置聊天消息位置(有新信息过来，向下滑动)
-                    messageListView.setSelection(messageListView.getCount() - 1);
+                    Message msg = mHandler.obtainMessage();
+                    msg.what = 0;
+                    msg.obj = message;
+                    mHandler.sendMessage(msg);
                 }
             }
         }
@@ -110,15 +113,17 @@ public class ChatActivity extends AppCompatActivity {
     };
 
     private void init() {
-        conversation = EMClient.getInstance().chatManager().getConversation(contactName);
-        if(conversation!=null) {
+        conversation = EMClient.getInstance().chatManager().getConversation(contactName, null, true);
+        if (conversation != null) {
             conversation.markAllMessagesAsRead();
         }
 
         msgEditText = (EditText) findViewById(R.id.lqm_chat_edit_msg);
         showEmoiconImageView = (ImageView) findViewById(R.id.lqm_chat_iv_showemoicon);
         sendBtn = (Button) findViewById(R.id.lqm_chat_btn_send);
-        sendBtn.setOnClickListener(new MyOnClickListener());
+        MyOnClickListener ml = new MyOnClickListener();
+        sendBtn.setOnClickListener(ml);
+        showEmoiconImageView.setOnClickListener(ml);
 
 
         emoiconGridView = (GridView) findViewById(R.id.lqm_chat_gv_emoticon);
@@ -132,8 +137,8 @@ public class ChatActivity extends AppCompatActivity {
         // 表情框
         List<Map<String, Object>> emojiList = new ArrayList<Map<String, Object>>();
         Map<String, Object> emojiMap = new HashMap<String, Object>();
-        for (int i = 0; i < 21; i++) {
-            emojiMap.put("emoji", emojiName[i]);
+        for (int i = 0; i < emojiId.length; i++) {
+            emojiMap.put("emoji", emojiId[i]);
             emojiList.add(emojiMap);
             emojiMap = new HashMap<String, Object>();
         }
@@ -150,23 +155,46 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     /**
+     * 自定义实现Handler，主要用于刷新UI操作
+     */
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+//                    EMMessage message = (EMMessage) msg.obj;
+//                    // 这里只是简单的demo，也只是测试文字消息的收发，所以直接将body转为EMTextMessageBody去获取内容
+//                    EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+                    // 将新的消息内容和时间加入到下边
+                    //更新adapter中信息数据
+                    chatMsgAdapter.notifyDataSetChanged();
+                    //设置聊天消息位置(有新信息过来，向下滑动)
+                    messageListView.setSelection(messageListView.getCount() - 1);
+                    // mContentText.setText(mContentText.getText() + "\n" + body.getMessage() + " <- " + message.getMsgTime());
+                    break;
+            }
+        }
+    };
+
+    /**
      * 发送信息
      */
     public void sendMsg() {
         //contactName = editContactName.getText().toString();
 
-
-        //创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
-        EMMessage message = EMMessage.createTxtSendMessage(msgEditText.getText().toString(), contactName);
+        if (msgEditText.getText().toString().length() != 0) {
+            //创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
+            EMMessage message = EMMessage.createTxtSendMessage(msgEditText.getText().toString(), contactName);
 //如果是群聊，设置chattype，默认是单聊
 
 //发送消息
-        EMClient.getInstance().chatManager().sendMessage(message);
+            EMClient.getInstance().chatManager().sendMessage(message);
 
-        //更新adapter中信息数据
-        chatMsgAdapter.notifyDataSetChanged();
-        //设置聊天消息位置(有新信息过来，向下滑动)
-        messageListView.setSelection(messageListView.getCount() - 1);
+            Message msg = mHandler.obtainMessage();
+            msg.what = 0;
+            msg.obj = message;
+            mHandler.sendMessage(msg);
+        }
     }
 
     public void deleteMsg() {
@@ -214,6 +242,13 @@ public class ChatActivity extends AppCompatActivity {
                 case R.id.lqm_chat_btn_send:
                     sendMsg();
                     break;
+                case R.id.lqm_chat_iv_showemoicon:
+                    if(emoiconGridView.getVisibility() == View.VISIBLE){
+                        hideEmotionPanel();
+                    }else if(emoiconGridView.getVisibility() == View.GONE){
+                        showEmotionPanel();
+                    }
+                    break;
             }
         }
     }
@@ -222,13 +257,14 @@ public class ChatActivity extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (position == ChatMsgAdapter.emojiId.length - 1) {
+            if (position == emojiId.length - 1) {
                 deleteMsg();
             } else {
                 Log.i("���", position + "");
                 Editable edit = msgEditText.getEditableText();
 
-                Drawable drawable = getResources().getDrawable(ChatMsgAdapter.emojiId[position]);
+                Drawable drawable = getResources().getDrawable(emojiId[position]);
+                //表情宽高大小
                 drawable.setBounds(0, 0, drawable.getIntrinsicWidth() * 4 / 5, drawable.getIntrinsicHeight() * 4 / 5);
                 // ��Ҫ������ı���emojiName[position]����Ҫ��������ı�
                 SpannableString spannable = new SpannableString(emojiName[position]);
@@ -283,4 +319,33 @@ public class ChatActivity extends AppCompatActivity {
         }
     };
     //---------------------------------------------------------------------------------------------------------
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //移除监听
+        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
+        //异步退出账号
+        EMClient.getInstance().logout(true, new EMCallBack() {
+
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
 }

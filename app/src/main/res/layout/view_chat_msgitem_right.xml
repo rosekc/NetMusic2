@@ -21,11 +21,12 @@
             android:id="@+id/chat_msg_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatqipao"
+            android:background="@drawable/rightqipao"
+            android:gravity="center|left"
             android:lineSpacingExtra="6dp"
-            android:text="第三个对手犯规好的功耗降低房价的赶紧回家开个会看见岁的法国电视结核杆菌客观和山豆根地方环境官方价格还"
+            android:text="岁的法国电视结山官方价格还"
             android:textColor="#FFFFFF"
-            android:textSize="15dp" />
+            android:textSize="16dp" />
     </LinearLayout>
 
     <TextView

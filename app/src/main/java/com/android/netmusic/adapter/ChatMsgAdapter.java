@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,26 +30,34 @@ import java.util.regex.Pattern;
 public class ChatMsgAdapter extends BaseAdapter {
     private EMConversation conversation;
     private Context context;
-    public static int[] emojiId = {R.mipmap.emoji_1f600, R.mipmap.emoji_1f601, R.mipmap.emoji_1f602,
-            R.mipmap.emoji_1f603, R.mipmap.emoji_1f604, R.mipmap.emoji_1f605, R.mipmap.emoji_1f606,
-            R.mipmap.emoji_1f607, R.mipmap.emoji_1f608, R.mipmap.emoji_1f609, R.mipmap.emoji_1f610,
-            R.mipmap.emoji_1f611, R.mipmap.emoji_1f612, R.mipmap.emoji_1f612, R.mipmap.emoji_1f614,
-            R.mipmap.emoji_1f615, R.mipmap.emoji_1f616, R.mipmap.emoji_1f617, R.mipmap.emoji_1f618,
-            R.mipmap.emoji_1f619, R.mipmap.emoji_1f620, R.mipmap.emoji_352, R.mipmap.emoji_353,
-            R.mipmap.emoji_354, R.mipmap.emoji_355, R.mipmap.emoji_356, R.mipmap.emoji_357,
-            R.mipmap.emoji_delete};
-    public static String[] emojiName = {"[emoji_1f600]", "[emoji_1f601]", "[emoji_1f602]", "[emoji_1f603]", " [emoji_1f604]",
-            "[emoji_1f605]", "[emoji_1f606]", "[emoji_1f607]", "[emoji_1f608]", "[emoji_1f609]", "[emoji_1f610]",
-            "[emoji_1f611]", "[emoji_1f612]", "[emoji_1f612]", "[emoji_1f614]", "[emoji_1f615]", "[emoji_1f616]",
-            "[emoji_1f617]", "[emoji_1f618]", "[emoji_1f619]", "[emoji_1f620]", "[emoji_352]", "[emoji_353]", "[emoji_354]",
-            "[emoji_355]", "[emoji_356]", "[emoji_357]", "[emoji_delete]"};
+    public static int[] emojiId = {
+            R.mipmap.emoji_352,R.mipmap.emoji_353,R.mipmap.emoji_354,R.mipmap.emoji_355,R.mipmap.emoji_356,
+            R.mipmap.emoji_357,R.mipmap.emoji_358,R.mipmap.emoji_359,R.mipmap.emoji_360,R.mipmap.emoji_361,
+            R.mipmap.emoji_362,R.mipmap.emoji_363,R.mipmap.emoji_364,R.mipmap.emoji_365,R.mipmap.emoji_366,
+            R.mipmap.emoji_367,R.mipmap.emoji_368,R.mipmap.emoji_369,R.mipmap.emoji_370,R.mipmap.emoji_371,
+            R.mipmap.emoji_372,R.mipmap.emoji_373,R.mipmap.emoji_374,R.mipmap.emoji_375,R.mipmap.emoji_376,
+            R.mipmap.emoji_377,R.mipmap.emoji_378,R.mipmap.emoji_delete};
+    public static String[] emojiName = {
+            "[emoji_352]","[emoji_353]","[emoji_354]","[emoji_355]","[emoji_356]","[emoji_357]",
+            "[emoji_358]","[emoji_359]","[emoji_360]","[emoji_361]","[emoji_362]","[emoji_363]",
+            "[emoji_364]","[emoji_365]","[emoji_366]","[emoji_367]","[emoji_368]","[emoji_369]",
+            "[emoji_370]", "[emoji_371]","[emoji_372]","[emoji_373]","[emoji_374]","[emoji_375]",
+            "[emoji_376]", "[emoji_377]","[emoji_378]","[emoji_del]"};
     private List<EMMessage> messages;
 
     public ChatMsgAdapter(Context context, String contactName, EMConversation conversation) {
         this.context = context;
         this.conversation = conversation;// EMClient.getInstance().chatManager().getConversation(userName);
-        if(conversation!=null)
-        messages = conversation.getAllMessages();
+        int count = conversation.getAllMessages().size();
+        if (count < conversation.getAllMsgCount() && count < 20) {
+            // 获取已经在列表中的最上边的一条消息id
+            String msgId = conversation.getAllMessages().get(0).getMsgId();
+            // 分页加载更多消息，需要传递已经加载的消息的最上边一条消息的id，以及需要加载的消息的条数
+            conversation.loadMoreMsgFromDB(msgId, 20 - count);
+        }
+
+
+
     }
 
     @Override
@@ -71,8 +80,9 @@ public class ChatMsgAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (conversation != null) {
-
+        //确保messages时刻刷新
+        messages = conversation.getAllMessages();
+        Log.e("---------",messages.size() + "----" + position);
             EMTextMessageBody body = (EMTextMessageBody) messages.get(position).getBody();
             //     TextMessageBody body = (TextMessageBody) message.getBody();
             if (messages.get(position).direct() == EMMessage.Direct.RECEIVE) {
@@ -118,9 +128,8 @@ public class ChatMsgAdapter extends BaseAdapter {
             }
             textViewContent.setText(ss);
             return convertView;
-
-        }
-        return null;
     }
+
+
 }
 
