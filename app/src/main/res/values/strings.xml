@@ -16,6 +16,17 @@
     <string name="have_reg">已签到</string>
     <string name="no_reg">点击签到</string>
     <string name="send_msg">发送</string>
+    <string name="local_music">本地音乐</string>
+    <string name="recent_play">最近播放</string>
+    <string name="down_manager">下载管理</string>
+    <string name="my_tv">我的电台</string>
+    <string name="my_like">我的收藏</string>
+    <string name="local_music_single">单曲</string>
+    <string name="local_music_artist">歌手</string>
+    <string name="local_music_ablum">专辑</string>
+    <string name="local_music_file">文件夹</string>
+    <string name="local_music_playall">播放全部</string>
+    <string name="local_music_select">多选</string>
 
 
     <string name="Is_the_registered">Registering..</string>
