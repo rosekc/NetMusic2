@@ -15,6 +15,7 @@
     <string name="username">用户名_1234567</string>
     <string name="have_reg">已签到</string>
     <string name="no_reg">点击签到</string>
+    <string name="send_msg">发送</string>
     <string name="local_music">本地音乐</string>
     <string name="recent_play">最近播放</string>
     <string name="down_manager">下载管理</string>

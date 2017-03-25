@@ -33,7 +33,6 @@
     <!-- QQ登录 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <!-- QQ登录 -->
     <application
         android:name=".MusicApp"
@@ -48,16 +47,24 @@
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LoginAndRegisterActivity"></activity>
-        <activity android:name=".activity.RegisterActivity">
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity android:name=".activity.LoginAndRegisterActivity" />
+        <activity
+            android:name=".activity.RegisterActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
         </activity>
 
+        <activity android:name=".activity.LoginActivity" >
+        </activity>
+        <activity android:name=".activity.ChatActivity">
+        </activity>
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
-
-
+        </activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -106,11 +113,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.LoginActivity"></activity>
+
         <service
             android:name=".service.PlayService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+
 
         <!--本地音乐-->
         <activity android:name=".activity.LocalMusicActivity"/>
@@ -126,4 +135,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

@@ -63,6 +63,13 @@
         <item name="android:tint">@color/black</item>
     </style>
 
+    <!--聊天信息时间-->
+    <style name="chat_msgtime">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
     <!--“我的”页面五个Layout样式-->
     <style name="music_layout_style">
         <item name="android:clickable">true</item>
