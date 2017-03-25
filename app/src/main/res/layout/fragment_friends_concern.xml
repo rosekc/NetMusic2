@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/friends_label"
+        android:text="@string/friends_label_addfriends" />
+
+    <LinearLayout
+        style="@style/friends_item">
+        <ImageView style="@style/friends_item_headicon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/friends_item_name1"
+                android:text="@string/myfriends"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/split"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/friends_item">
+        <ImageView style="@style/friends_item_headicon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/friends_item_name1"
+                android:text="@string/star"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/split"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/friends_item">
+        <ImageView style="@style/friends_item_headicon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/friends_item_name1"
+                android:text="@string/musician"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/split"/>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        style="@style/friends_item">
+        <ImageView style="@style/friends_item_headicon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                style="@style/friends_item_name1"
+                android:text="@string/player"/>
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/split"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/friends_label"
+        android:text="@string/friends_label_myconcern" />
+    <ListView
+        android:id="@+id/friends_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:headerDividersEnabled="false">
+
+    </ListView>
+</LinearLayout>

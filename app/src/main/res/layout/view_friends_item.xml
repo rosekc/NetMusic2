@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout style="@style/friends_item">
+
+        <ImageView
+            android:id="@+id/friends_headicon"
+            style="@style/friends_item_headicon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/friends_name"
+                    style="@style/friends_item_name2"
+                    android:text="@string/player" />
+
+                <ImageView
+                    android:id="@+id/friends_menu"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="7dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/friends_item_menu" />
+            </LinearLayout>
+
+            <view
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/split" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

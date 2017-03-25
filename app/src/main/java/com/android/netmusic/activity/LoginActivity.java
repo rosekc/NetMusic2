@@ -32,6 +32,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginBtn.setOnClickListener(this);
     }
 
+    /**
+     * 登录
+     */
     private void login() {
         EMClient.getInstance().login(accountEditText.getText().toString(), psdEditText.getText().toString(), new EMCallBack() {//回调
             @Override

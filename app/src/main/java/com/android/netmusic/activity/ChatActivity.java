@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -41,7 +40,7 @@ import java.util.regex.Pattern;
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiId;
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiName;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
     private EditText msgEditText;
     private ImageView showEmoiconImageView;
     private Button sendBtn;
@@ -54,25 +53,26 @@ public class ChatActivity extends AppCompatActivity {
 
     private EditText editContactName;
 
-//    private int[] emoji = {R.mipmap.emoji_1f600, R.mipmap.emoji_1f601, R.mipmap.emoji_1f602,
-//            R.mipmap.emoji_1f603, R.mipmap.emoji_1f604, R.mipmap.emoji_1f605, R.mipmap.emoji_1f606,
-//            R.mipmap.emoji_1f607, R.mipmap.emoji_1f608, R.mipmap.emoji_1f609, R.mipmap.emoji_1f610,
-//            R.mipmap.emoji_1f611, R.mipmap.emoji_1f612, R.mipmap.emoji_1f612, R.mipmap.emoji_1f614,
-//            R.mipmap.emoji_1f615, R.mipmap.emoji_1f616, R.mipmap.emoji_1f617, R.mipmap.emoji_1f618,
-//            R.mipmap.emoji_1f619, R.mipmap.emoji_1f620, R.mipmap.emoji_352, R.mipmap.emoji_353,
-//            R.mipmap.emoji_354, R.mipmap.emoji_355, R.mipmap.emoji_356, R.mipmap.emoji_357,
-//            R.mipmap.emoji_delete};
-//    private String[] emojiName = {"[emoji_1f600]", "[emoji_1f601]", "[emoji_1f602]", "[emoji_1f603]", " [emoji_1f604]",
-//            "[emoji_1f605]", "[emoji_1f606]", "[emoji_1f607]", "[emoji_1f608]", "[emoji_1f609]", "[emoji_1f610]",
-//            "[emoji_1f611]", "[emoji_1f612]", "[emoji_1f612]", "[emoji_1f614]", "[emoji_1f615]", "[emoji_1f616]",
-//            "[emoji_1f617]", "[emoji_1f618]", "[emoji_1f619]", "[emoji_1f620]", "[emoji_352]", "[emoji_353]", "[emoji_354]",
-//            "[emoji_355]", "[emoji_356]", "[emoji_357]", "[emoji_delete]"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         init();
+    }
+
+    @Override
+    public void publish(int progress) {
+
+    }
+
+    @Override
+    public void change(int position) {
+
+    }
+
+    @Override
+    public void changeForState(int position) {
+
     }
 
     //聊天消息监听
@@ -197,6 +197,9 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 删除文字或表情
+     */
     public void deleteMsg() {
         if (msgEditText.getText().length() != 0) {
             // 选择文本的游标位置 全选 或 部分选择 或没选
@@ -220,6 +223,11 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 判断是否删除表情
+     * @param cursor
+     * @return
+     */
     public boolean isDeletePng(int cursor) {
         String content = msgEditText.getText().toString().substring(0, cursor);
         if (content.length() >= emojiName[0].length()) {
@@ -288,6 +296,9 @@ public class ChatActivity extends AppCompatActivity {
         return emoiconGridView.getVisibility() == View.VISIBLE;
     }
 
+    /**
+     * 显示表情面板
+     */
     public void showEmotionPanel() {
         emoiconGridView.removeCallbacks(mHideEmotionPanelTask);
         InputMethodUtils.updateSoftInputMethod(this, WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
@@ -296,6 +307,9 @@ public class ChatActivity extends AppCompatActivity {
         InputMethodUtils.hideKeyboard(getCurrentFocus());
     }
 
+    /**
+     * 隐藏表情面板
+     */
     public void hideEmotionPanel() {
         if (emoiconGridView.getVisibility() != View.GONE) {
             // showEmoiconImageView.setBackgroundResource(R.drawable.expression1);
@@ -304,6 +318,10 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 更新表情面板高度
+     * @param keyboardHeight
+     */
     public void updateEmotionPanelHeight(int keyboardHeight) {
         ViewGroup.LayoutParams params = emoiconGridView.getLayoutParams();
         if (params != null && params.height != keyboardHeight) {

@@ -33,6 +33,7 @@
     <!-- QQ登录 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <!-- QQ登录 -->
     <application
         android:name=".MusicApp"
@@ -41,7 +42,6 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
@@ -52,19 +52,11 @@
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.LoginActivity">
 
         </activity>
-
-        <activity android:name=".activity.LoginActivity" >
-        </activity>
-        <activity android:name=".activity.ChatActivity">
-        </activity>
-        <activity
-            android:name=".activity.SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+        <activity android:name=".activity.ChatActivity"></activity>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -113,27 +105,27 @@
             </intent-filter>
         </receiver>
 
-
         <service
             android:name=".service.PlayService"
             android:enabled="true"
             android:exported="true" />
 
-
-
-        <!--本地音乐-->
-        <activity android:name=".activity.LocalMusicActivity"/>
-        <activity android:name=".activity.PlayBarBaseActivity"/>
-        <activity android:name=".activity.PlayBoxActivity"
-            android:theme="@style/MyFullScreenTheme"/>
-
-        <activity android:name=".activity.SplashActivity"
-                  android:theme="@style/MyFullScreenTheme">
+        <!-- 本地音乐 -->
+        <activity android:name=".activity.LocalMusicActivity" />
+        <activity android:name=".activity.PlayBarBaseActivity" />
+        <activity
+            android:name=".activity.PlayBoxActivity"
+            android:theme="@style/MyFullScreenTheme" />
+        <activity
+            android:name=".activity.SplashActivity"
+            android:theme="@style/MyFullScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.FriendsActivity"></activity>
     </application>
 
 </manifest>
