@@ -54,7 +54,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.ChatActivity"></activity>
         <activity
@@ -67,7 +71,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
+                        <!--腾讯测试key-->
                 <data android:scheme="tencent222222" />
             </intent-filter>
         </activity>
@@ -119,11 +123,7 @@
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/MyFullScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activity.FriendsActivity"></activity>
     </application>

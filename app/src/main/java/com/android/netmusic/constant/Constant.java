@@ -13,4 +13,7 @@ public class Constant {
     public static final int SKIN_TOGGLE_OFF = 2;//皮肤模式选择关闭
     public static final int SKIN_TOGGLE_ON = 3;//皮肤模式选择开启
     public static final int ABLUM_SKIN_BLUR = 20;//专辑皮肤的模糊程度
+
+    public static final int MSG_LIST_UPDATE = 0;
+    public  static final int FRIENDS_LIST_UPDATE = 1;
 }

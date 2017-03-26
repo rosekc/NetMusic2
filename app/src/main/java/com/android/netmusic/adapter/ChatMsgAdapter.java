@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 public class ChatMsgAdapter extends BaseAdapter {
     private EMConversation conversation;
     private Context context;
+    private LayoutInflater inflater;
     public static int[] emojiId = {
             R.mipmap.emoji_352,R.mipmap.emoji_353,R.mipmap.emoji_354,R.mipmap.emoji_355,R.mipmap.emoji_356,
             R.mipmap.emoji_357,R.mipmap.emoji_358,R.mipmap.emoji_359,R.mipmap.emoji_360,R.mipmap.emoji_361,
@@ -48,6 +49,8 @@ public class ChatMsgAdapter extends BaseAdapter {
     public ChatMsgAdapter(Context context, String contactName, EMConversation conversation) {
         this.context = context;
         this.conversation = conversation;// EMClient.getInstance().chatManager().getConversation(userName);
+        inflater = LayoutInflater.from(context);
+
         int count = conversation.getAllMessages().size();
         if (count < conversation.getAllMsgCount() && count < 20) {
             // 获取已经在列表中的最上边的一条消息id
@@ -87,14 +90,14 @@ public class ChatMsgAdapter extends BaseAdapter {
             //     TextMessageBody body = (TextMessageBody) message.getBody();
             if (messages.get(position).direct() == EMMessage.Direct.RECEIVE) {
                 if (messages.get(position).getType() == EMMessage.Type.TXT) {
-                    convertView = LayoutInflater.from(context).inflate(R.layout.view_chat_msgitem_left, null);
+                    convertView = inflater.inflate(R.layout.view_chat_msgitem_left, null);
                     // textViewName = (TextView)
                     // convertView.findViewById(R.id.textName);
                     // textViewName.setText(message.getFrom());
                 }
             } else {
                 if (messages.get(position).getType() == EMMessage.Type.TXT) {
-                    convertView = LayoutInflater.from(context).inflate(R.layout.view_chat_msgitem_right, null);
+                    convertView = inflater.inflate(R.layout.view_chat_msgitem_right, null);
                 }
             }
 

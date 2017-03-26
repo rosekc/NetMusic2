@@ -86,35 +86,40 @@
     <!--我的好友页面 Label-->
     <style name="friends_label">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">25dp</item>
         <item name="android:gravity">center|left</item>
         <item name="android:background">@color/split</item>
-        <item name="android:textSize">15dp</item>
-        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:textColor">#5C5D5D</item>
     </style>
     <!--我的好友界面Item-->
     <style name="friends_item">
         <item name="android:layout_height">60dp</item>
-        <item name="android:clickable">true</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+    <!--我的好友界面Item-->
+    <style name="friends_item1" parent="friends_item">
+        <item name="android:clickable">true</item>
     </style>
     <!--我的好友界面Item 用户头像样式-->
     <style name="friends_item_headicon">
-        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
     <!--我的好友界面Item 用户名字样式-->
     <style name="friends_item_name1">
+        <item name="android:layout_marginLeft">8dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center|left</item>
-        <item name="android:textSize">17dp</item>
+        <item name="android:textSize">15dp</item>
     </style>
     <!--我的好友界面Item 用户名字样式-->
     <style name="friends_item_name2">

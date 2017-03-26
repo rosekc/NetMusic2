@@ -6,10 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.android.netmusic.activity.ChatActivity">
-    <EditText
-        android:id="@+id/edit_contactName"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
+
+
     <ListView
         android:id="@+id/lqm_chat_lv_message"
         android:layout_width="match_parent"
@@ -17,31 +15,62 @@
         android:layout_weight="1"
         android:background="#ecedf1"
         android:divider="@null"
-        android:transcriptMode="alwaysScroll" >
-    </ListView>
+        android:transcriptMode="alwaysScroll"></ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
         android:orientation="horizontal">
-        <EditText
-            android:id="@+id/lqm_chat_edit_msg"
-            android:layout_marginLeft="5dp"
+
+        <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/lqm_chat_iv_showemoicon"
-            android:scaleType="fitCenter"
-            android:layout_width="50dp"
-            android:layout_height="match_parent" />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/lqm_chat_edit_msg"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:maxHeight="110dp"
+                    android:minHeight="35dp" />
+
+                <ImageView
+                    android:id="@+id/lqm_chat_iv_showemoicon"
+                    android:layout_width="45dp"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_showemoji" />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/base_line"/>
+
+        </LinearLayout>
+
+
         <Button
             android:id="@+id/lqm_chat_btn_send"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:text="@string/send_msg"
-
-            android:textSize="22dp"
-            android:layout_height="match_parent" />
+            android:textSize="18dp" />
     </LinearLayout>
+
     <GridView
         android:id="@+id/lqm_chat_gv_emoticon"
         android:layout_width="match_parent"
@@ -50,6 +79,5 @@
         android:listSelector="@android:color/transparent"
         android:numColumns="7"
         android:paddingLeft="18dp"
-        android:paddingTop="15dp" >
-    </GridView>
+        android:paddingTop="15dp"></GridView>
 </LinearLayout>

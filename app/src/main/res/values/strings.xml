@@ -29,8 +29,9 @@
     <string name="local_music_select">多选</string>
     <string name="friends_concern">关注</string>
     <string name="friends_fans">粉丝</string>
+    <string name="myfriends">我的好友</string>
     <string name="friends_label_addfriends">添加好友</string>
-    <string name="myfriends">认识的人</string>
+    <string name="acquaintance">认识的人</string>
     <string name="star">明星用户</string>
     <string name="musician">音乐人</string>
     <string name="player">音乐达人</string>

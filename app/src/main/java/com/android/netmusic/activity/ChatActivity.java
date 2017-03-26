@@ -1,5 +1,6 @@
 package com.android.netmusic.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +26,6 @@ import android.widget.SimpleAdapter;
 import com.android.netmusic.R;
 import com.android.netmusic.adapter.ChatMsgAdapter;
 import com.android.netmusic.utils.InputMethodUtils;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -39,7 +40,11 @@ import java.util.regex.Pattern;
 
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiId;
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiName;
+import static com.android.netmusic.constant.Constant.MSG_LIST_UPDATE;
 
+/**
+ * 聊天页面
+ */
 public class ChatActivity extends BaseActivity {
     private EditText msgEditText;
     private ImageView showEmoiconImageView;
@@ -51,12 +56,17 @@ public class ChatActivity extends BaseActivity {
     private ChatMsgAdapter chatMsgAdapter;
 
 
-    private EditText editContactName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        Intent intent = getIntent();
+        contactName = intent.getStringExtra("useraccount");
+
+        //设置ActionBar
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(contactName);
         init();
     }
 
@@ -84,7 +94,7 @@ public class ChatActivity extends BaseActivity {
             for (EMMessage message : messages) {
                 if (message.getUserName() == contactName) {
                     Message msg = mHandler.obtainMessage();
-                    msg.what = 0;
+                    msg.what = MSG_LIST_UPDATE;
                     msg.obj = message;
                     mHandler.sendMessage(msg);
                 }
@@ -149,9 +159,6 @@ public class ChatActivity extends BaseActivity {
         emoiconGridView.setOnItemClickListener(new OnEmojiClickListener());
         // 隐藏表情框
         hideEmotionPanel();
-
-
-        editContactName = (EditText) findViewById(R.id.edit_contactName);
     }
 
     /**
@@ -161,10 +168,7 @@ public class ChatActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 0:
-//                    EMMessage message = (EMMessage) msg.obj;
-//                    // 这里只是简单的demo，也只是测试文字消息的收发，所以直接将body转为EMTextMessageBody去获取内容
-//                    EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+                case MSG_LIST_UPDATE:
                     // 将新的消息内容和时间加入到下边
                     //更新adapter中信息数据
                     chatMsgAdapter.notifyDataSetChanged();
@@ -185,13 +189,13 @@ public class ChatActivity extends BaseActivity {
         if (msgEditText.getText().toString().length() != 0) {
             //创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
             EMMessage message = EMMessage.createTxtSendMessage(msgEditText.getText().toString(), contactName);
-//如果是群聊，设置chattype，默认是单聊
+            //如果是群聊，设置chattype，默认是单聊
 
-//发送消息
+            //发送消息
             EMClient.getInstance().chatManager().sendMessage(message);
 
             Message msg = mHandler.obtainMessage();
-            msg.what = 0;
+            msg.what = MSG_LIST_UPDATE;
             msg.obj = message;
             mHandler.sendMessage(msg);
         }
@@ -225,6 +229,7 @@ public class ChatActivity extends BaseActivity {
 
     /**
      * 判断是否删除表情
+     *
      * @param cursor
      * @return
      */
@@ -251,13 +256,33 @@ public class ChatActivity extends BaseActivity {
                     sendMsg();
                     break;
                 case R.id.lqm_chat_iv_showemoicon:
-                    if(emoiconGridView.getVisibility() == View.VISIBLE){
+                    if (emoiconGridView.getVisibility() == View.VISIBLE) {
                         hideEmotionPanel();
-                    }else if(emoiconGridView.getVisibility() == View.GONE){
+                        showEmoiconImageView.setImageResource(R.mipmap.ic_keyboard);
+                    } else if (emoiconGridView.getVisibility() == View.GONE) {
                         showEmotionPanel();
+                        showEmoiconImageView.setImageResource(R.mipmap.ic_showemoji);
                     }
                     break;
             }
+        }
+    }
+
+    class MsgEditWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 
@@ -320,6 +345,7 @@ public class ChatActivity extends BaseActivity {
 
     /**
      * 更新表情面板高度
+     *
      * @param keyboardHeight
      */
     public void updateEmotionPanelHeight(int keyboardHeight) {
@@ -344,26 +370,5 @@ public class ChatActivity extends BaseActivity {
         super.onDestroy();
         //移除监听
         EMClient.getInstance().chatManager().removeMessageListener(msgListener);
-        //异步退出账号
-        EMClient.getInstance().logout(true, new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                // TODO Auto-generated method stub
-
-            }
-        });
     }
 }

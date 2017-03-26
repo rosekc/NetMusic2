@@ -9,24 +9,26 @@
         android:text="@string/friends_label_addfriends" />
 
     <LinearLayout
-        style="@style/friends_item">
-        <ImageView style="@style/friends_item_headicon" />
+        style="@style/friends_item1">
+        <ImageView style="@style/friends_item_headicon"
+            android:src="@mipmap/ic_acquaintance"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
             <TextView
                 style="@style/friends_item_name1"
-                android:text="@string/myfriends"/>
-            <view
+                android:text="@string/acquaintance"/>
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/split"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        style="@style/friends_item">
-        <ImageView style="@style/friends_item_headicon" />
+        style="@style/friends_item1">
+        <ImageView style="@style/friends_item_headicon"
+            android:src="@mipmap/ic_star"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -34,15 +36,16 @@
             <TextView
                 style="@style/friends_item_name1"
                 android:text="@string/star"/>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/split"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        style="@style/friends_item">
-        <ImageView style="@style/friends_item_headicon" />
+        style="@style/friends_item1">
+        <ImageView style="@style/friends_item_headicon"
+            android:src="@mipmap/ic_musician"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -50,15 +53,16 @@
             <TextView
                 style="@style/friends_item_name1"
                 android:text="@string/musician"/>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/split"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        style="@style/friends_item">
-        <ImageView style="@style/friends_item_headicon" />
+        style="@style/friends_item1">
+        <ImageView style="@style/friends_item_headicon"
+            android:src="@mipmap/ic_player"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -66,7 +70,7 @@
             <TextView
                 style="@style/friends_item_name1"
                 android:text="@string/player"/>
-            <view
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/split"/>
@@ -82,7 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:headerDividersEnabled="false">
+        android:divider="#00000000"
+        android:dividerHeight="0dp">
 
     </ListView>
 </LinearLayout>
