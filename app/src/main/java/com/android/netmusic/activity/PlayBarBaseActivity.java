@@ -131,6 +131,7 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
             //点击主页音乐Bar的播放按钮时的处理逻辑
             case R.id.play_bar_play_pause:
                 if(!playService.isPlaying()&&!playService.isPasue()){//音乐没有播放且没有暂停时
+                    System.out.println("当前播放:"+playService.getCurrentPosition());
                     playService.play(playService.getCurrentPosition());
                 }else if(!playService.isPlaying()&&playService.isPasue()){//音乐没有播放且暂停时
                     playService.start();
