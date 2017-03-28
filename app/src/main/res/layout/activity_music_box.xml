@@ -122,8 +122,6 @@
                     android:layout_weight="1"
                     android:maxHeight="1dp"
                     android:minHeight="1dp"
-                    android:max="100"
-                    android:progress="0"
                     android:progressTint="@color/base_red"
                     android:thumb="@drawable/thumb_image"/>
 

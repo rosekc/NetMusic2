@@ -225,8 +225,6 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
                 box_mode.setBackgroundResource(R.mipmap.ic_box_mode_single);
                 break;
         }
-        //更新进度条
-        box_seekbar.setProgress(playService.getCurrentProgress());
     }
     /**
      * 点击事件
