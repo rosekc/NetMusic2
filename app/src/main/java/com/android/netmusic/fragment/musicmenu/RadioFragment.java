@@ -19,13 +19,16 @@ import com.android.netmusic.activity.MainActivity;
 public class RadioFragment extends Fragment {
 
     private MainActivity mMainActivity;
+    private static RadioFragment instance;
     /**
      * 单例
      * @param mainActivity
      * @return
      */
     public static RadioFragment getInstance(MainActivity mainActivity){
-        RadioFragment instance = new RadioFragment();
+        if(instance==null){
+         instance = new RadioFragment();
+        }
         instance.setMainActivity(mainActivity);
         return instance;
     }

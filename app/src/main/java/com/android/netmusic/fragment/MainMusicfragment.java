@@ -22,6 +22,7 @@ import com.android.netmusic.activity.MainActivity;
 public class MainMusicfragment  extends Fragment implements View.OnClickListener{
 
     private MainActivity mMainActivity;
+    private static MainMusicfragment instance;
 
     /**
      * 单例
@@ -29,7 +30,9 @@ public class MainMusicfragment  extends Fragment implements View.OnClickListener
      * @return
      */
     public static MainMusicfragment getInstance(MainActivity mainActivity){
-        MainMusicfragment instance = new MainMusicfragment();
+        if(instance==null){
+            instance = new MainMusicfragment();
+        }
         instance.setMainActivity(mainActivity);
         return instance;
     }

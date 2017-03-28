@@ -97,10 +97,10 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void change(int position) {
-        if (position >= 0 && position<playService.getMaxCount()&&playService!=null) {
+        if (playService!=null&&position >= 0 && position<playService.getMaxCount()) {
             mp3Info = playService.getCurrentMp3(position);
             //以下是更新主界面下部的UI
-            final Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
+            Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
             music_general_ablum.setImageBitmap(bitmap);
             music_general_title.setText(mp3Info.getMediaName());
             music_general_artist.setText(mp3Info.getMediaArtist());

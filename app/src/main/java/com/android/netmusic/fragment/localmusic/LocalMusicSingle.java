@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class LocalMusicSingle extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener,LocalMusicSingleListViewAdapter.ItemCallBack{
 
     private LocalMusicActivity localMusicActivity;
+    private static LocalMusicSingle instance;
 
     /**
      * 单例
@@ -35,7 +36,9 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
      * @return
      */
     public static LocalMusicSingle getInstance(LocalMusicActivity localMusicActivity){
-        LocalMusicSingle instance = new LocalMusicSingle();
+        if(instance==null){
+            instance = new LocalMusicSingle();
+        }
         instance.setMainActivity(localMusicActivity);
         return instance;
     }

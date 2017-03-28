@@ -1,29 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/box_bg"
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
                 android:background="@mipmap/box_bg">
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:fitsSystemWindows="true"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.AppCompat"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-    <!--音乐盒-->
+    <!--整个布局-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.5"
-        android:background="@color/black">
+        android:orientation="vertical"
+        >
 
+        <!--顶部TitleBar-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="20dp">
+            <!--返回-->
+            <Button
+                android:id="@+id/box_back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@mipmap/ic_back"
+                android:tint="@color/white"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
+            <!--歌名和歌手名-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+                <TextView
+                    android:id="@+id/box_musicname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/musicname"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/box_musicartist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/musicartist"
+                    android:textSize="12sp"
+                    android:maxLines="1"
+                    android:textColor="#707070"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!--中间ViewPage专辑-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <include
+                layout="@layout/box_ablum"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!--底部控制中心-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--四个按钮，收藏，下载，评论，更多-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/box_unlike_click"/>
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/ic_box_down"
+                    android:tint="#505050"/>
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/ic_box_comment"
+                    android:tint="#505050"/>
+                <Button
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/ic_box_more"
+                    android:tint="#505050"/>
+            </LinearLayout>
+
+            <!--进度条-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/box_currenttime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+
+                <SeekBar
+                    android:id="@+id/box_seekbar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxHeight="1dp"
+                    android:minHeight="1dp"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressTint="@color/base_red"
+                    android:thumb="@drawable/thumb_image"/>
+
+                <TextView
+                    android:id="@+id/box_totaltime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:text="00:00"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"/>
+            </LinearLayout>
+
+            <!--进度条下面的控制-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp">
+
+                <Button
+                    android:id="@+id/box_state"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/ic_box_play"
+                    android:layout_centerInParent="true"/>
+
+                <Button
+                    android:id="@+id/box_pev"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_toLeftOf="@id/box_state"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/box_next_pev_click"
+                    android:rotation="180"/>
+
+                <Button
+                    android:id="@+id/box_next"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_toRightOf="@id/box_state"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/box_next_pev_click"/>
+
+                <Button
+                    android:id="@+id/box_mode"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="2dp"
+                    android:background="@mipmap/ic_box_mode_order"/>
+
+                <Button
+                    android:id="@+id/box_list"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/box_list_click"/>
+            </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

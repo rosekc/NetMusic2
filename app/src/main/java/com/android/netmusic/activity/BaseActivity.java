@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -89,16 +88,8 @@ public abstract class BaseActivity extends AppCompatActivity{
         }
     }
 
-    /**
-     * 动态保存听歌时间
-     */
-    private void savePlayTime() {
-        SharedPreferences.Editor editor = app.sp.edit();
-        long sumTime = app.sp.getLong("sumTime", 0);
-        sumTime += 500;
-        editor.putLong("sumTime", sumTime);
-        editor.commit();
-    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////

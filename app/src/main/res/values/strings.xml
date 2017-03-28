@@ -27,6 +27,8 @@
     <string name="local_music_file">文件夹</string>
     <string name="local_music_playall">播放全部</string>
     <string name="local_music_select">多选</string>
+    <string name="musicname">歌名</string>
+    <string name="musicartist">歌手</string>
 
 
     <string name="Is_the_registered">Registering..</string>

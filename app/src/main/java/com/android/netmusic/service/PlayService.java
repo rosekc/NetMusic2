@@ -2,11 +2,13 @@ package com.android.netmusic.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 
 import com.android.netmusic.MusicApp;
+import com.android.netmusic.constant.Constant;
 import com.android.netmusic.musicmodel.Mp3Info;
 import com.android.netmusic.utils.MediaUtils;
 
@@ -33,6 +35,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     private MusicUpdateListener musicUpdateListener;
     private Boolean isPause = false;//是否暂停
     private ExecutorService es = Executors.newSingleThreadExecutor();//线程池
+    private  MusicApp app;//全局应用程序
 
     /**
      * 以下是播放模式
@@ -59,15 +62,16 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         super.onCreate();
         System.out.println("Service has create");
         //获得MusicApp的实例
-        MusicApp app = (MusicApp) getApplication();
-        //读取上次推出保存的状态
-        currentPosition = app.sp.getInt("currentPosition", 0);
-        play_mode = app.sp.getInt("play_mode", PlayService.ORDER_PLAY);
+        app = (MusicApp) getApplication();
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
         mp3Infos = MediaUtils.getMp3Infos(this);
+
+        //读取上次推出保存的状态
+        currentPosition = app.sp.getInt(Constant.currentposition, 0);
+        play_mode = app.sp.getInt(Constant.play_mode, PlayService.ORDER_PLAY);
         es.execute(updateStatusRunnable);
         //注册广播
 //        MyReceiver myReceiver = new MyReceiver();
@@ -79,10 +83,20 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     }
 
     /**
+     * 退出时保存状态
+     */
+    private void saveState(){
+        SharedPreferences.Editor editor = app.sp.edit();
+        editor.putInt(Constant.currentposition,currentPosition);
+        editor.putInt(Constant.play_mode,play_mode);
+        editor.commit();
+    }
+    /**
      * 关掉服务
      */
     @Override
     public void onDestroy() {
+        System.out.println("测试,看看你被kill了没");
         super.onDestroy();
         if (es != null && !es.isShutdown()) {
             es.shutdown();
@@ -194,6 +208,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 musicUpdateListener.onChange(currentPosition);
                 musicUpdateListener.onChangeForState(currentPosition);
             }
+            //保存状态
+            saveState();
             //showNotification();
         }
     }

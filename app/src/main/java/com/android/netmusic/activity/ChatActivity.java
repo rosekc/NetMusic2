@@ -47,7 +47,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button sendBtn;
     private GridView emoiconGridView;
     private ListView messageListView;
-    private String contactName = "a";
+    private String contactName = "b";
     private EMConversation conversation;
     private ChatMsgAdapter chatMsgAdapter;
 

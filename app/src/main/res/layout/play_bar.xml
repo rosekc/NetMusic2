@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:maxLines="1"
-                android:text="歌名"
+                android:text="@string/musicname"
                 android:textColor="@color/black"/>
             <TextView
                 android:id="@+id/music_general_artist"
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:maxLines="1"
-                android:text="歌手"
+                android:text="@string/musicartist"
                 android:textColor="#707070"/>
         </LinearLayout>
         <LinearLayout

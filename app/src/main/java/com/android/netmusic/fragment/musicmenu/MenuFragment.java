@@ -19,13 +19,16 @@ import com.android.netmusic.activity.MainActivity;
 public class MenuFragment extends Fragment {
 
     private MainActivity mMainActivity;
+    private static MenuFragment instance;
     /**
      * 单例
      * @param mainActivity
      * @return
      */
     public static MenuFragment getInstance(MainActivity mainActivity){
-        MenuFragment instance = new MenuFragment();
+        if(instance==null){
+            instance = new MenuFragment();
+        }
         instance.setMainActivity(mainActivity);
         return instance;
     }

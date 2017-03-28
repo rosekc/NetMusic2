@@ -76,6 +76,4 @@
         android:src="@mipmap/user_image"
         android:layout_marginBottom="10dp"
         android:layout_above="@id/user_info"/>
-
-
 </RelativeLayout>

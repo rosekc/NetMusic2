@@ -18,6 +18,7 @@ import com.android.netmusic.activity.LocalMusicActivity;
 public class LocalMusicFile extends Fragment{
 
     private LocalMusicActivity localMusicActivity;
+    private static LocalMusicFile instance;
 
     /**
      * 单例
@@ -25,7 +26,9 @@ public class LocalMusicFile extends Fragment{
      * @return
      */
     public static LocalMusicFile getInstance(LocalMusicActivity localMusicActivity){
-        LocalMusicFile instance = new LocalMusicFile();
+        if(instance==null){
+            instance = new LocalMusicFile();
+        }
         instance.setMainActivity(localMusicActivity);
         return instance;
     }
