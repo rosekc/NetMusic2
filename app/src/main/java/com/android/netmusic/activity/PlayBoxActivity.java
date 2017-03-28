@@ -237,7 +237,7 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
         switch (v.getId()){
             case R.id.box_state://播放状态
                 if(!playService.isPlaying()&&!playService.isPasue()){//音乐没有播放且没有暂停时
-                    playService.play(0);
+                    playService.play(playService.getCurrentPosition());
                 }else if(!playService.isPlaying()&&playService.isPasue()){//音乐没有播放且暂停时
                     playService.start();
                 }else{//音乐播放时
