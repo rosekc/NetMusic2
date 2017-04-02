@@ -11,6 +11,7 @@ import com.android.netmusic.MusicApp;
 import com.android.netmusic.constant.Constant;
 import com.android.netmusic.musicmodel.Mp3Info;
 import com.android.netmusic.utils.MediaUtils;
+import com.lidroid.xutils.exception.DbException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,6 +74,8 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         currentPosition = app.sp.getInt(Constant.currentposition, 0);
         play_mode = app.sp.getInt(Constant.play_mode, PlayService.ORDER_PLAY);
         es.execute(updateStatusRunnable);
+
+
         //注册广播
 //        MyReceiver myReceiver = new MyReceiver();
 //        IntentFilter intentFilter = new IntentFilter();
@@ -193,6 +196,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             position = 0;
         }
         if(mp3Infos.size()>0){
+            saveRecentPlay(position);
             Mp3Info mp3Info = mp3Infos.get(position);
             mediaPlayer.reset();
             try {
@@ -449,6 +453,29 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             return false;
         }
         return true;
+    }
+
+    public void remove(int position){
+        mp3Infos.remove(position);
+    }
+
+    /**
+     * 随机播放
+     */
+    public void random(){
+        currentPosition = random.nextInt(mp3Infos.size());
+        play(currentPosition);
+        play_mode = RANDOM_PLAY;
+    }
+
+    public void saveRecentPlay(int currentPosition){
+        Mp3Info mp3Info = mp3Infos.get(currentPosition);
+        mp3Info.setMediaPlayTime(System.currentTimeMillis());
+        try {
+            MusicApp.dbUtilsRecord.saveOrUpdate(mp3Info);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
 //    /**

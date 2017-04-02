@@ -83,4 +83,10 @@
         <item name="android:textColor">#303030</item>
         <item name="android:layout_marginLeft">15dp</item>
     </style>
+
+    <!--播放列表POPWINDOW的动画-->
+    <style name="current_play_list_anim">
+        <item name="android:windowEnterAnimation">@anim/current_play_list_open</item>
+        <item name="android:windowExitAnimation">@anim/current_play_list_close</item>
+    </style>
 </resources>

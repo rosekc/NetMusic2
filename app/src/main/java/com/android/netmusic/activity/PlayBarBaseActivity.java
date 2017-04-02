@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.netmusic.R;
 import com.android.netmusic.musicmodel.Mp3Info;
@@ -140,7 +139,8 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.play_bar_list://打开播放列表
-                Toast.makeText(this,"列表",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"列表",Toast.LENGTH_SHORT).show();
+                onCreatePopWindow(getWindow().getDecorView());
                 break;
             case R.id.play_bar://启动音乐盒
                 Intent intent = new Intent(this,PlayBoxActivity.class);

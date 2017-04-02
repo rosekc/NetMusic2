@@ -10,8 +10,6 @@ public class Constant {
     public static final String SP_NAME = "sp_save";
     public static final String RECORD_DB = "record.db";
     public static final String LIKE_DB = "like.db";
-    public static final int SKIN_TOGGLE_OFF = 2;//皮肤模式选择关闭
-    public static final int SKIN_TOGGLE_ON = 3;//皮肤模式选择开启
     public static final int ABLUM_SKIN_BLUR = 5;//专辑皮肤的模糊程度
     public static final String currentposition = "currentPosition";//当前播放的时间
     public static final String play_mode = "play_mode";//播放模式

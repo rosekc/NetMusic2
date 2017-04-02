@@ -30,7 +30,7 @@ import com.android.netmusic.wiget.RoundImageView;
  */
 
 public class PlayBoxActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
-    //音乐盒总的布局北京
+    //音乐盒总的布局背景
     private LinearLayout box_bg;
     //返回按钮
     private Button box_back;
@@ -269,6 +269,10 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.box_back://返回
                 finish();
+                break;
+            case R.id.box_list:
+                //创建POPwindow
+                onCreatePopWindow(getWindow().getDecorView());
                 break;
         }
     }

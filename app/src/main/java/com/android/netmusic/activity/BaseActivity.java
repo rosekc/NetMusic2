@@ -8,8 +8,20 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.android.netmusic.MusicApp;
+import com.android.netmusic.R;
+import com.android.netmusic.adapter.CurrentPlayListAdapter;
 import com.android.netmusic.service.PlayService;
 
 /**
@@ -17,7 +29,7 @@ import com.android.netmusic.service.PlayService;
  * Created by jiaoml on 2017/3/22.
  */
 
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity implements CurrentPlayListAdapter.ItemCallBack,AdapterView.OnItemClickListener{
     //获取MusicApp实例
     private MusicApp app;
     //音乐播放服务
@@ -90,8 +102,87 @@ public abstract class BaseActivity extends AppCompatActivity{
 
 
 
+    private CurrentPlayListAdapter currentPlayListAdapter;//适配器
+    private ListView listView;
+    /**
+     * 创建Pop窗体
+     * @param view
+     */
+    protected void onCreatePopWindow(View view){
+        //获取布局
+        View current_play_list = LayoutInflater.from(this).inflate(R.layout.current_play_list,null);
+        //创建Popwindow
+        PopupWindow popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, getWindow().getDecorView().getHeight()*3/5);
+
+        LinearLayout current_play_list_random = (LinearLayout)current_play_list.findViewById(R.id.current_play_list_random);
+        //随机播放
+        current_play_list_random.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playService.random();
+                currentPlayListAdapter.notifyDataSetChanged();
+            }
+        });
+        //ListView以及一些控制
+        listView = (ListView)current_play_list.findViewById(R.id.current_play_list_list_view);
+        currentPlayListAdapter = new CurrentPlayListAdapter(this,playService.getMp3Infos(),this);
+        listView.setAdapter(currentPlayListAdapter);
+        listView.setSelection(playService.getCurrentPosition());
+        listView.setOnItemClickListener(this);
+
+        //设置动画
+        popupWindow.setAnimationStyle(R.style.current_play_list_anim);
+        popupWindow.setFocusable(true);
+        popupWindow.setTouchable(true);
+        popupWindow.setOutsideTouchable(true);
+        //将布局加载到Popwindow里
+        popupWindow.setContentView(current_play_list);
+        //设置显示位置
+        popupWindow.showAtLocation(view, Gravity.BOTTOM,0,0);
+        //背景相关
+        backgroundAlpha(0.7f);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backgroundAlpha(1.0f);
+            }
+        });
+    }
+
+    /**
+     * 设置Activity透明度
+     * @param fl
+     */
+    protected void backgroundAlpha(float fl){
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = fl;
+        getWindow().setAttributes(lp);
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
 
+
+    /**
+     * ListView点击事件
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        playService.play(position);
+        currentPlayListAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 从播放列表中删除某首歌
+     * @param position
+     */
+    @Override
+    public void click(int position) {
+        Toast.makeText(this,"删除",Toast.LENGTH_SHORT).show();
+    }
 }

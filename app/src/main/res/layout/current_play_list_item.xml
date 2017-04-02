@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+             <!--歌手歌名-->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                android:layout_marginLeft="7dp">
+
+                <ImageView
+                    android:id="@+id/current_play_list_horn"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@mipmap/ic_horn"
+                    android:visibility="gone"
+                    android:layout_marginRight="7dp"/>
+
+                <TextView
+                    android:id="@+id/current_play_list_musicname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="歌名"
+                    android:textSize="13sp"
+                    android:textColor="#303030"
+                    android:maxLines="1"/>
+                <TextView
+                    android:id="@+id/current_play_list_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/current_play_line"
+                    android:text=" - "/>
+                <TextView
+                    android:id="@+id/current_play_list_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="歌手"
+                    android:textSize="10sp"
+                    android:textColor="@color/current_play_aritst"
+                    android:maxLines="1"/>
+            </LinearLayout>
+
+            <!--删除-->
+            <LinearLayout
+                android:id="@+id/current_play_list_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_margin="10dp"
+                    android:src="@mipmap/ic_current_play_delete"
+                    android:tint="#909090"/>
+            </LinearLayout>
+        </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F0F0F0"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"/>
+</LinearLayout>
