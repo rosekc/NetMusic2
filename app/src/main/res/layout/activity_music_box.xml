@@ -79,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/like_music"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/box_unlike_click"/>

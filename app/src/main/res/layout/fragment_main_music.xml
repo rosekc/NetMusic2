@@ -13,8 +13,8 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/my_local_music"
             android:tint="@color/base_red"/>
         <LinearLayout
@@ -41,14 +41,15 @@
 
     <!--最近播放-->
     <LinearLayout
+        android:id="@+id/recent_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/my_recent_play"
             android:tint="@color/base_red"/>
         <LinearLayout
@@ -82,8 +83,8 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/my_down_manage"
             android:tint="@color/base_red"/>
         <LinearLayout
@@ -117,8 +118,8 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/ic_autogetmusic"
             android:tint="@color/base_red"/>
         <LinearLayout
@@ -146,14 +147,15 @@
 
     <!--我的收藏-->
     <LinearLayout
+        android:id="@+id/like_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/my_like"
             android:tint="@color/base_red"/>
         <LinearLayout

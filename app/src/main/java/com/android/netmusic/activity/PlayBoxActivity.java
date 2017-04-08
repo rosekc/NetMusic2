@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -16,6 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.netmusic.MusicApp;
 import com.android.netmusic.R;
 import com.android.netmusic.constant.Constant;
 import com.android.netmusic.musicmodel.Mp3Info;
@@ -23,6 +25,7 @@ import com.android.netmusic.service.PlayService;
 import com.android.netmusic.utils.FastBlur;
 import com.android.netmusic.utils.MediaUtils;
 import com.android.netmusic.wiget.RoundImageView;
+import com.lidroid.xutils.exception.DbException;
 
 /**
  * 音乐盒
@@ -30,6 +33,7 @@ import com.android.netmusic.wiget.RoundImageView;
  */
 
 public class PlayBoxActivity extends BaseActivity implements View.OnClickListener,SeekBar.OnSeekBarChangeListener{
+    private static final String TAG = "PlayBoxActivity";
     //音乐盒总的布局背景
     private LinearLayout box_bg;
     //返回按钮
@@ -47,6 +51,8 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
     //Mp3
     private Mp3Info mp3Info;
     private static final int UPDATE_TIME = 1;
+    //收藏状态
+    private Button like_music;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
@@ -90,6 +96,9 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
         box_list.setOnClickListener(this);
         //圆形图片
         round_ablunm = (RoundImageView)findViewById(R.id.round_ablunm);
+        //收藏状态
+        like_music = (Button)findViewById(R.id.like_music);
+        like_music.setOnClickListener(this);
     }
 
     @Override
@@ -186,6 +195,8 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
             //更新圆形图片
             bg_bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
             round_ablunm.setImageBitmap(bg_bitmap);
+            //更新红心状态
+            likeSate(mp3Info);
         }
     }
 
@@ -274,6 +285,21 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
                 //创建POPwindow
                 onCreatePopWindow(getWindow().getDecorView());
                 break;
+            case R.id.like_music://收藏状态
+                Mp3Info likemp3Info = playService.getCurrentMp3(playService.getCurrentPosition());
+                try {
+                    Mp3Info tempInfo = MusicApp.dbUtilsLike.findFirst(likemp3Info);
+                    if(tempInfo==null){
+                        MusicApp.dbUtilsLike.saveOrUpdate(likemp3Info);
+                    }else{
+                        MusicApp.dbUtilsLike.delete(likemp3Info);
+                    }
+                    Log.d(TAG,"收藏状态");
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                likeSate(likemp3Info);//更改红心状态
+                break;
         }
     }
 
@@ -310,5 +336,20 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-
+    /**
+     * 红心的点击状态
+     * @param mp3Info
+     */
+    private void likeSate(Mp3Info mp3Info){
+        try {
+            Mp3Info mp3Info1 = MusicApp.dbUtilsLike.findFirst(mp3Info);
+            if(mp3Info1==null){
+                like_music.setBackgroundResource(R.mipmap.ic_box_unlike);
+            }else{
+                like_music.setBackgroundResource(R.mipmap.ic_box_like);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
 }
