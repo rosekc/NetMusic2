@@ -261,8 +261,9 @@ public class ChatActivity extends BaseActivity {
                         showEmoiconImageView.setImageResource(R.mipmap.ic_keyboard);
                     } else if (emoiconGridView.getVisibility() == View.GONE) {
                         showEmotionPanel();
+                        //表情按钮
                         showEmoiconImageView.setImageResource(R.mipmap.ic_showemoji);
-                    }
+                      }
                     break;
             }
         }
@@ -299,17 +300,16 @@ public class ChatActivity extends BaseActivity {
                 Drawable drawable = getResources().getDrawable(emojiId[position]);
                 //表情宽高大小
                 drawable.setBounds(0, 0, drawable.getIntrinsicWidth() * 4 / 5, drawable.getIntrinsicHeight() * 4 / 5);
-                // ��Ҫ������ı���emojiName[position]����Ҫ��������ı�
+                //需要处理的文本
                 SpannableString spannable = new SpannableString(emojiName[position]);
-                // Ҫ��ͼƬ���ָ�������־�Ҫ��ImageSpan
+                //使用ImageSpan替换指定文字
                 ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
-                // ��ʼ�滻��ע���2�͵�3��������ʾ�����￪ʼ�滻�������滻������start��end��
-                // ���һ������������ѧ�еļ���,[5,12)��ʾ��5��12������5��������12
+                //开始替换
                 Log.i("Span", span.toString());
                 spannable.setSpan(span, 0, emojiName[position].length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 // contentEdit.setText(spannable);
-                int index = msgEditText.getSelectionStart();// ��ȡ�������λ��
-
+                int index = msgEditText.getSelectionStart();
+                //在指定文字位置插入图片
                 edit.insert(index, spannable);
                 // MainActivity.contentEdit.append(spannable);
             }

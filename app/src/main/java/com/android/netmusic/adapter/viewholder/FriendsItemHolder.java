@@ -10,4 +10,5 @@ import android.widget.TextView;
 public class FriendsItemHolder {
     public ImageView headIcon;
     public TextView name;
+    public ImageView more;
 }

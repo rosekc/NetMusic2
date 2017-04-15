@@ -19,7 +19,7 @@ public class LocalMusicFragmentAdapter extends FragmentPagerAdapter {
     private final int ITEM_SUM = 4;
     private FragmentManager fm;
 
-    private  LocalMusicActivity localMusicActivity;
+    private LocalMusicActivity localMusicActivity;
     public LocalMusicFragmentAdapter(FragmentManager fm, LocalMusicActivity localMusicActivity){
         super(fm);
         this.fm = fm;
@@ -33,7 +33,7 @@ public class LocalMusicFragmentAdapter extends FragmentPagerAdapter {
                 LocalMusicSingle localMusicSingle = LocalMusicSingle.getInstance(localMusicActivity);
                 return localMusicSingle;
             case 1:
-                LocalMusicArtist localMusicArtist =LocalMusicArtist.getInstance(localMusicActivity);
+                LocalMusicArtist localMusicArtist = LocalMusicArtist.getInstance(localMusicActivity);
                 return localMusicArtist;
             case 2:
                 LocalMusicAblum localMusicAblum = LocalMusicAblum.getInstance(localMusicActivity);

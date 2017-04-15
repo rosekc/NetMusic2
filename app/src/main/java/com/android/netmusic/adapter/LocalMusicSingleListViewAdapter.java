@@ -24,7 +24,7 @@ public class LocalMusicSingleListViewAdapter extends BaseAdapter implements View
     private Context mContext;
     private Boolean isDataFist;//判断是否是第一条数据
     private ItemCallBack mItemCallBack;
-    public LocalMusicSingleListViewAdapter(Context context,ArrayList<Mp3Info> mp3Infos,ItemCallBack itemCallBack){
+    public LocalMusicSingleListViewAdapter(Context context, ArrayList<Mp3Info> mp3Infos, ItemCallBack itemCallBack){
         this.mContext = context;
         this.mMp3Infos = mp3Infos;
         isDataFist = false;

@@ -31,7 +31,7 @@ import static com.android.netmusic.constant.Constant.FRIENDS_LIST_UPDATE;
  * Created by Android on 2017/3/26.
  */
 
-public class ConcernFragment extends Fragment {
+public class ConcernFragment extends Fragment{
     private View view;
     private FriendsListAdapter mFriendsListAdapter;
     private ListView mFriendsListView;
@@ -47,6 +47,9 @@ public class ConcernFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 初始化
+     */
     private void init() {
         mFriendsListView = (ListView) view.findViewById(R.id.friends_listview);
         mFriendsListAdapter = new FriendsListAdapter(getContext());
@@ -84,6 +87,14 @@ public class ConcernFragment extends Fragment {
                 //增加了联系人时回调此方法
             }
         });
+        //More点击事件
+        mFriendsListAdapter.setOnFriendsItemMoreClickListener(new FriendsListAdapter.FriendsItemMoreClickListener() {
+            @Override
+            public void clickMore(View v) {
+                int position = (Integer) v.getTag();
+                Toast.makeText(getContext(),"位置"+position,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -108,7 +119,6 @@ public class ConcernFragment extends Fragment {
                         }
                     });
 
-
                     //更新adapter中信息数据
                     //刷新列表
                     mFriendsListAdapter.notifyDataSetChanged();
@@ -117,6 +127,16 @@ public class ConcernFragment extends Fragment {
         }
     };
 
+    /**
+     * 显示PopuWindow
+     */
+    public void showPopuWindow(){
+
+    }
+
+    /**
+     * Item短点击
+     */
     class FriendsItemShortClickListenr implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

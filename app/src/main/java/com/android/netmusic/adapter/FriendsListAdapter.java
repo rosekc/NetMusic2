@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.android.netmusic.R;
 import com.android.netmusic.adapter.viewholder.FriendsItemHolder;
-import com.hyphenate.EMValueCallBack;
-import com.hyphenate.chat.EMClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,27 +20,16 @@ import java.util.List;
  * Created by Android on 2017/3/25.
  */
 
-public class FriendsListAdapter extends BaseAdapter {
+public class FriendsListAdapter extends BaseAdapter implements View.OnClickListener {
     private LayoutInflater inflater;
     public static List<String> mUserAccountList = new ArrayList<>();
     private FriendsItemHolder mFriendsItemHolder;
+    private FriendsItemMoreClickListener mFriendsItemMoreClickListener;
 
 
     public FriendsListAdapter(Context context) {
         inflater = LayoutInflater.from(context);
 
-        //异步获取好友名字列表
-        EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
-            @Override
-            public void onSuccess(List<String> strings) {
-                mUserAccountList = strings;
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-        });
 
     }
 
@@ -67,13 +54,31 @@ public class FriendsListAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.view_friends_item, null);
             mFriendsItemHolder = new FriendsItemHolder();
-            mFriendsItemHolder.headIcon = (ImageView) convertView.findViewById(R.id.friends_headicon);
-            mFriendsItemHolder.name = (TextView) convertView.findViewById(R.id.friends_name);
+            mFriendsItemHolder.headIcon = (ImageView) convertView.findViewById(R.id.friends_item_headicon);
+            mFriendsItemHolder.name = (TextView) convertView.findViewById(R.id.friends_item_name);
+            mFriendsItemHolder.more = (ImageView) convertView.findViewById(R.id.friends_item_more);
             convertView.setTag(mFriendsItemHolder);
         } else {
             mFriendsItemHolder = (FriendsItemHolder) convertView.getTag();
         }
         mFriendsItemHolder.name.setText(mUserAccountList.get(position).toString());
+        //More点击事件
+        mFriendsItemHolder.more.setOnClickListener(this);
+        mFriendsItemHolder.more.setTag(position);
+
         return convertView;
+    }
+
+    public interface FriendsItemMoreClickListener {
+        public abstract void clickMore(View v);
+    }
+
+    public void setOnFriendsItemMoreClickListener(FriendsItemMoreClickListener mFriendsItemMoreClickListener) {
+        this.mFriendsItemMoreClickListener = mFriendsItemMoreClickListener;
+    }
+
+    @Override
+    public void onClick(View v) {
+        mFriendsItemMoreClickListener.clickMore(v);
     }
 }

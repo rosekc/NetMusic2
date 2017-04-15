@@ -20,7 +20,7 @@ public class FriendsActivity extends PlayBarBaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.myfriends);
-
+//初始化
         init();
     }
 

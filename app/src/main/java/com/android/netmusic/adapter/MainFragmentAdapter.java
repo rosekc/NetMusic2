@@ -18,7 +18,7 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
     private final int ITEM_SUM = 3;
     private FragmentManager fm;
 
-    private  MainActivity mMainActivity;
+    private MainActivity mMainActivity;
     public MainFragmentAdapter(FragmentManager fm, MainActivity mainActivity){
         super(fm);
         this.fm = fm;
@@ -32,7 +32,7 @@ public class MainFragmentAdapter extends FragmentPagerAdapter {
                 MainMusicfragment mmf = MainMusicfragment.getInstance(mMainActivity);
                 return mmf;
             case 1:
-                MainMusicMenufragment mmmf =MainMusicMenufragment.getInstance(mMainActivity);
+                MainMusicMenufragment mmmf = MainMusicMenufragment.getInstance(mMainActivity);
                 return mmmf;
             case 2:
                 MainCommunityfragment mcf = MainCommunityfragment.getInstance(mMainActivity);

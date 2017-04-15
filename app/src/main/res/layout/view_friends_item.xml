@@ -7,7 +7,7 @@
     <LinearLayout style="@style/friends_item">
 
         <ImageView
-            android:id="@+id/friends_headicon"
+            android:id="@+id/friends_item_headicon"
             style="@style/friends_item_headicon" />
 
         <LinearLayout
@@ -16,24 +16,24 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginLeft="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginLeft="8dp"
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/friends_name"
+                    android:id="@+id/friends_item_name"
                     style="@style/friends_item_name2"
                     android:text="@string/player" />
 
                 <ImageView
-                    android:id="@+id/friends_menu"
+                    android:id="@+id/friends_item_more"
                     android:layout_width="45dp"
                     android:layout_height="match_parent"
-
+                    android:background="?android:attr/selectableItemBackground"
                     android:padding="15dp"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/friends_item_menu" />
+                    android:src="@mipmap/friends_item_more" />
             </LinearLayout>
 
             <View
