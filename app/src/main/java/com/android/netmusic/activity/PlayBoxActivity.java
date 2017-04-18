@@ -25,6 +25,8 @@ import com.android.netmusic.service.PlayService;
 import com.android.netmusic.utils.FastBlur;
 import com.android.netmusic.utils.MediaUtils;
 import com.android.netmusic.wiget.RoundImageView;
+import com.lidroid.xutils.db.sqlite.Selector;
+import com.lidroid.xutils.db.sqlite.WhereBuilder;
 import com.lidroid.xutils.exception.DbException;
 
 /**
@@ -290,12 +292,16 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
                 try {
                     Mp3Info tempInfo = MusicApp.dbUtilsLike.findFirst(likemp3Info);
                     if(tempInfo==null){
-                        MusicApp.dbUtilsLike.saveOrUpdate(likemp3Info);
+                        MusicApp.dbUtilsLike.save(likemp3Info);
+                        Mp3Info t = MusicApp.dbUtilsLike.findFirst(likemp3Info);
+                        Log.d(TAG,likemp3Info.getMediaName()+",收藏成功,"+t);
                     }else{
-                        MusicApp.dbUtilsLike.delete(likemp3Info);
+                        MusicApp.dbUtilsLike.delete(Mp3Info.class,WhereBuilder.b("mediaName","=",mp3Info.getMediaName()));
+                        Log.d(TAG,likemp3Info.getMediaName()+",删除成功");
                     }
                     Log.d(TAG,"收藏状态");
                 } catch (DbException e) {
+                    Log.e(TAG,"收藏时发生错误,"+e.getMessage());
                     e.printStackTrace();
                 }
                 likeSate(likemp3Info);//更改红心状态
@@ -342,11 +348,13 @@ public class PlayBoxActivity extends BaseActivity implements View.OnClickListene
      */
     private void likeSate(Mp3Info mp3Info){
         try {
-            Mp3Info mp3Info1 = MusicApp.dbUtilsLike.findFirst(mp3Info);
+            Mp3Info mp3Info1 = MusicApp.dbUtilsLike.findFirst(Mp3Info.class,WhereBuilder.b("mediaName","=",mp3Info.getMediaName()));
             if(mp3Info1==null){
                 like_music.setBackgroundResource(R.mipmap.ic_box_unlike);
+                Log.d(TAG,mp3Info.getMediaName()+",未收藏");
             }else{
                 like_music.setBackgroundResource(R.mipmap.ic_box_like);
+                Log.d(TAG,mp3Info.getMediaName()+",已经收藏");
             }
         } catch (DbException e) {
             e.printStackTrace();

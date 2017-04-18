@@ -59,6 +59,14 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
         return view;
     }
 
+    //更新状态
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mLocalMusicSingleListViewAdapter!=null){
+            mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
+        }
+    }
 
     private ListView mListView;
     private LocalMusicSingleListViewAdapter mLocalMusicSingleListViewAdapter;
@@ -132,8 +140,7 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
         }
         if(position!=0&&localMusicActivity.playService!=null){
             localMusicActivity.playService.play(position-1);
-            //显示喇叭
-            //view.findViewById(R.id.local_music_single_horn).setVisibility(View.VISIBLE);
         }
+        mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
     }
 }

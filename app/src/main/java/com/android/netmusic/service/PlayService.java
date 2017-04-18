@@ -21,6 +21,7 @@ import com.android.netmusic.activity.MainActivity;
 import com.android.netmusic.constant.Constant;
 import com.android.netmusic.musicmodel.Mp3Info;
 import com.android.netmusic.utils.MediaUtils;
+import com.lidroid.xutils.db.sqlite.WhereBuilder;
 import com.lidroid.xutils.exception.DbException;
 
 import java.io.IOException;
@@ -523,13 +524,10 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     public void saveRecentPlay(int currentPosition){
         Mp3Info mp3Info = mp3Infos.get(currentPosition);
         try {
-//            Mp3Info tempMp3Info = MusicApp.dbUtilsRecord.findById(Mp3Info.class,mp3Info.getId());
-//            if(tempMp3Info==null){
-//                MusicApp.dbUtilsRecord.save(mp3Info);
-//            }else{
-//                MusicApp.dbUtilsRecord.update(mp3Info);
-//            }
-            MusicApp.dbUtilsRecord.saveOrUpdate(mp3Info);
+            Mp3Info tempMp3Info = MusicApp.dbUtilsRecord.findFirst(Mp3Info.class, WhereBuilder.b("mediaName","=",mp3Info.getMediaName()));
+            if(tempMp3Info==null){
+                MusicApp.dbUtilsRecord.save(mp3Info);
+            }
             Log.d(TAG,"saveRecentPlayOk");
         } catch (DbException e) {
             e.printStackTrace();

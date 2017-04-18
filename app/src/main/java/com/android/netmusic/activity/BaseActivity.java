@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.netmusic.MusicApp;
@@ -110,17 +112,53 @@ public abstract class BaseActivity extends AppCompatActivity implements CurrentP
      */
     protected void onCreatePopWindow(View view){
         //获取布局
-        View current_play_list = LayoutInflater.from(this).inflate(R.layout.current_play_list,null);
+        final View current_play_list = LayoutInflater.from(this).inflate(R.layout.current_play_list,null);
         //创建Popwindow
         PopupWindow popupWindow = new PopupWindow(ViewGroup.LayoutParams.MATCH_PARENT, getWindow().getDecorView().getHeight()*3/5);
 
         LinearLayout current_play_list_random = (LinearLayout)current_play_list.findViewById(R.id.current_play_list_random);
+
+        //标题
+        final TextView current_play_list_title = (TextView)current_play_list.findViewById(R.id.current_play_list_title);
+        //图标
+        final ImageView current_play_list_ic = (ImageView) current_play_list.findViewById(R.id.current_play_list_ic);
+        //设置播放模式
+        switch (playService.getPlay_mode()){
+            case PlayService.ORDER_PLAY:
+                current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_order);
+                current_play_list_title.setText("列表播放");
+                break;
+            case PlayService.RANDOM_PLAY:
+                current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_random);
+                current_play_list_title.setText("随机播放");
+                break;
+            case PlayService.SING_PLAY:
+                current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_single);
+                current_play_list_title.setText("单曲循环");
+                break;
+        }
         //随机播放
         current_play_list_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                playService.random();
-                currentPlayListAdapter.notifyDataSetChanged();
+                switch (playService.getPlay_mode()){
+                    case PlayService.ORDER_PLAY:
+                        playService.setPlay_mode(PlayService.RANDOM_PLAY);
+                        current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_random);
+                        current_play_list_title.setText("随机播放");
+                        break;
+                    case PlayService.RANDOM_PLAY:
+                        playService.setPlay_mode(PlayService.SING_PLAY);
+                        current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_single);
+                        current_play_list_title.setText("单曲循环");
+                        break;
+                    case PlayService.SING_PLAY:
+                        playService.setPlay_mode(PlayService.ORDER_PLAY);
+                        current_play_list_ic.setImageResource(R.mipmap.ic_box_mode_order);
+                        current_play_list_title.setText("列表播放");
+                        break;
+                }
+                changeForState(playService.getCurrentPosition());
             }
         });
         //ListView以及一些控制

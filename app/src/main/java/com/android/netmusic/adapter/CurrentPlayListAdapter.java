@@ -63,6 +63,7 @@ public class CurrentPlayListAdapter extends BaseAdapter{
         }
 
         Mp3Info mp3Info = mMp3Infos.get(position);
+
         //设置每个条目的样式
         if(position== BaseActivity.playService.getCurrentPosition()){
             viewHolder.musicname.setText(mp3Info.getMediaName());
@@ -79,9 +80,6 @@ public class CurrentPlayListAdapter extends BaseAdapter{
             viewHolder.line.setTextColor(mContext.getResources().getColor(R.color.current_play_line));
             viewHolder.horn.setVisibility(View.GONE);
         }
-
-
-
         //注册事件
         MyOnClickListener myOnClickListener = new MyOnClickListener(position);
         viewHolder.delete.setOnClickListener(myOnClickListener);

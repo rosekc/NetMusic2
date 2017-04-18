@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <!--本地音乐-->
     <LinearLayout
@@ -175,4 +176,16 @@
             android:src="@mipmap/ic_horn"
             android:visibility="invisible"/>
     </LinearLayout>
+    <!--歌单-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ExpandableListView>
+    </LinearLayout>
+
 </LinearLayout>

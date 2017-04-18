@@ -95,9 +95,8 @@ public class RecentPlayActivity extends PlayBarBaseActivity implements View.OnCl
                 }
                 if(position!=0&&playService!=null){
                     playService.play(position-1);
-                    //显示喇叭
-                    //view.findViewById(R.id.local_music_single_horn).setVisibility(View.VISIBLE);
                 }
+                mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
             }
         });
     }

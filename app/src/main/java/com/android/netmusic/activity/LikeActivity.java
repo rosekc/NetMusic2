@@ -99,15 +99,14 @@ public class LikeActivity extends PlayBarBaseActivity implements View.OnClickLis
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(playService.getPlay_list()!= PlayService.RECENT_MUSIC){
+                if(playService.getPlay_list()!= PlayService.LIKE_MUSIC){
                     playService.setMp3Infos(mMp3Infos);
-                    playService.setPlay_list(PlayService.RECENT_MUSIC);
+                    playService.setPlay_list(PlayService.LIKE_MUSIC);
                 }
                 if(position!=0&&playService!=null){
                     playService.play(position-1);
-                    //显示喇叭
-                    //view.findViewById(R.id.local_music_single_horn).setVisibility(View.VISIBLE);
                 }
+                mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
             }
         });
     }

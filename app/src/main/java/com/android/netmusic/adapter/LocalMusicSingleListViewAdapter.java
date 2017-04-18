@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.netmusic.R;
+import com.android.netmusic.activity.BaseActivity;
 import com.android.netmusic.musicmodel.Mp3Info;
 
 import java.util.ArrayList;
@@ -54,17 +55,31 @@ public class LocalMusicSingleListViewAdapter extends BaseAdapter implements View
             viewHolder.musicname = (TextView)convertView.findViewById(R.id.musicname);
             viewHolder.artist_ablum = (TextView)convertView.findViewById(R.id.artist_ablum);
             viewHolder.local_music_more = (LinearLayout)convertView.findViewById(R.id.local_music_more);
-            //viewHolder.local_music_single_horn = (ImageView)convertView.findViewById(R.id.local_music_single_horn);
+            viewHolder.local_music_single_horn = (ImageView)convertView.findViewById(R.id.local_music_single_horn);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         Mp3Info mp3Info = mMp3Infos.get(position);
+
         String musicname = mp3Info.getMediaName();//歌名
         String artist = mp3Info.getMediaArtist();//歌手
         String ablum = mp3Info.getMediaAlbum();
-        viewHolder.musicname.setText(musicname);
-        viewHolder.artist_ablum.setText(artist+"-"+ablum);
+
+        //设置每个条目的样式
+        if(position== BaseActivity.playService.getCurrentPosition()){
+            viewHolder.musicname.setText(musicname);
+            viewHolder.artist_ablum.setText(artist+"-"+ablum);
+            viewHolder.musicname.setTextColor(mContext.getResources().getColor(R.color.base_red));
+            viewHolder.artist_ablum.setTextColor(mContext.getResources().getColor(R.color.base_red));
+            viewHolder.local_music_single_horn.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.musicname.setText(musicname);
+            viewHolder.artist_ablum.setText(artist+"-"+ablum);
+            viewHolder.musicname.setTextColor(mContext.getResources().getColor(R.color.current_play_musicname));
+            viewHolder.artist_ablum.setTextColor(mContext.getResources().getColor(R.color.current_play_aritst));
+            viewHolder.local_music_single_horn.setVisibility(View.GONE);
+        }
         //注册事件
         viewHolder.local_music_more.setOnClickListener(this);
         return convertView;
