@@ -9,8 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.netmusic.R;
+import com.android.netmusic.adapter.FriendsListAdapter;
 import com.hyphenate.EMCallBack;
+import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText accountEditText;
@@ -42,8 +46,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
                 Log.d("main", "登录聊天服务器成功！");
-                Intent intent = new Intent(LoginActivity.this,FriendsActivity.class);
-                startActivity(intent);
+
+                EMClient.getInstance().contactManager().aysncGetAllContactsFromServer(new EMValueCallBack<List<String>>() {
+                    @Override
+                    public void onSuccess(List<String> strings) {
+                        FriendsListAdapter.mUserAccountList = strings;
+                        Intent intent = new Intent(LoginActivity.this, FriendsActivity.class);
+                        startActivity(intent);
+                    }
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+                });
+
+
             }
 
             @Override
