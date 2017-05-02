@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.netmusic.R;
 import com.android.netmusic.musicmodel.Mp3Info;
@@ -97,10 +96,10 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void change(int position) {
-        if (position >= 0 && position<playService.getMaxCount()&&playService!=null) {
+        if (playService!=null&&position >= 0 && position<playService.getMaxCount()) {
             mp3Info = playService.getCurrentMp3(position);
             //以下是更新主界面下部的UI
-            final Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
+            Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
             music_general_ablum.setImageBitmap(bitmap);
             music_general_title.setText(mp3Info.getMediaName());
             music_general_artist.setText(mp3Info.getMediaArtist());
@@ -131,7 +130,8 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
             //点击主页音乐Bar的播放按钮时的处理逻辑
             case R.id.play_bar_play_pause:
                 if(!playService.isPlaying()&&!playService.isPasue()){//音乐没有播放且没有暂停时
-                    playService.play(0);
+                    System.out.println("当前播放:"+playService.getCurrentPosition());
+                    playService.play(playService.getCurrentPosition());
                 }else if(!playService.isPlaying()&&playService.isPasue()){//音乐没有播放且暂停时
                     playService.start();
                 }else{//音乐播放时
@@ -139,7 +139,8 @@ public class PlayBarBaseActivity extends BaseActivity implements View.OnClickLis
                 }
                 break;
             case R.id.play_bar_list://打开播放列表
-                Toast.makeText(this,"列表",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"列表",Toast.LENGTH_SHORT).show();
+                onCreatePopWindow(getWindow().getDecorView());
                 break;
             case R.id.play_bar://启动音乐盒
                 Intent intent = new Intent(this,PlayBoxActivity.class);

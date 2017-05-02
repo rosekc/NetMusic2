@@ -18,6 +18,7 @@ import com.android.netmusic.activity.LocalMusicActivity;
 public class LocalMusicAblum extends Fragment{
 
     private LocalMusicActivity localMusicActivity;
+    private static  LocalMusicAblum instance;
 
     /**
      * 单例
@@ -25,7 +26,9 @@ public class LocalMusicAblum extends Fragment{
      * @return
      */
     public static LocalMusicAblum getInstance(LocalMusicActivity localMusicActivity){
-        LocalMusicAblum instance = new LocalMusicAblum();
+        if(instance==null){
+            instance = new LocalMusicAblum();
+        }
         instance.setMainActivity(localMusicActivity);
         return instance;
     }

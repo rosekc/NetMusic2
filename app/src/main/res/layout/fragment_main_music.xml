@@ -3,6 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <!--本地音乐-->
     <LinearLayout
@@ -13,9 +14,9 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ic_autogetmusic"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/my_local_music"
             android:tint="@color/base_red"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -41,15 +42,16 @@
 
     <!--最近播放-->
     <LinearLayout
+        android:id="@+id/recent_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ic_autogetmusic"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/my_recent_play"
             android:tint="@color/base_red"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -82,9 +84,9 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ic_autogetmusic"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/my_down_manage"
             android:tint="@color/base_red"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -117,8 +119,8 @@
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:src="@mipmap/ic_autogetmusic"
             android:tint="@color/base_red"/>
         <LinearLayout
@@ -146,15 +148,16 @@
 
     <!--我的收藏-->
     <LinearLayout
+        android:id="@+id/like_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         style="@style/music_layout_style"
         android:gravity="center">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ic_autogetmusic"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/my_like"
             android:tint="@color/base_red"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -173,4 +176,16 @@
             android:src="@mipmap/ic_horn"
             android:visibility="invisible"/>
     </LinearLayout>
+    <!--歌单-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </ExpandableListView>
+    </LinearLayout>
+
 </LinearLayout>

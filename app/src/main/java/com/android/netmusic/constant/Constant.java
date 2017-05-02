@@ -16,4 +16,8 @@ public class Constant {
 
     public static final int MSG_LIST_UPDATE = 0;
     public  static final int FRIENDS_LIST_UPDATE = 1;
+    public static final int ABLUM_SKIN_BLUR = 5;//专辑皮肤的模糊程度
+    public static final String currentposition = "currentPosition";//当前播放的时间
+    public static final String play_mode = "play_mode";//播放模式
+    public static final String play_list = "list";//播放模式
 }

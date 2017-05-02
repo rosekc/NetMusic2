@@ -24,13 +24,16 @@ public class MainMusicMenufragment extends Fragment {
     private MusicMenuFragmentAdapter mMusicMenuFragmentAdapter;
     private TabLayout mTabLayout;
     private MainActivity mMainActivity;
+    private static MainMusicMenufragment instance;
     /**
      * 单例
      * @param mainActivity
      * @return
      */
     public static MainMusicMenufragment getInstance(MainActivity mainActivity){
-        MainMusicMenufragment instance = new MainMusicMenufragment();
+        if(instance==null){
+            instance = new MainMusicMenufragment();
+        }
         instance.setMainActivity(mainActivity);
         return instance;
     }

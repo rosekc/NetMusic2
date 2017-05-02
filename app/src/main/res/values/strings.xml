@@ -36,6 +36,8 @@
     <string name="musician">音乐人</string>
     <string name="player">音乐达人</string>
     <string name="friends_label_myconcern">我的关注</string>
+    <string name="musicname">歌名</string>
+    <string name="musicartist">歌手</string>
 
 
     <string name="Is_the_registered">Registering..</string>

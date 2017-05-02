@@ -16,6 +16,7 @@ import com.android.netmusic.R;
 import com.android.netmusic.activity.LocalMusicActivity;
 import com.android.netmusic.adapter.LocalMusicSingleListViewAdapter;
 import com.android.netmusic.musicmodel.Mp3Info;
+import com.android.netmusic.service.PlayService;
 import com.android.netmusic.utils.MediaUtils;
 
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 public class LocalMusicSingle extends Fragment implements View.OnClickListener,AdapterView.OnItemClickListener,LocalMusicSingleListViewAdapter.ItemCallBack{
 
     private LocalMusicActivity localMusicActivity;
+    private static LocalMusicSingle instance;
 
     /**
      * 单例
@@ -35,7 +37,9 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
      * @return
      */
     public static LocalMusicSingle getInstance(LocalMusicActivity localMusicActivity){
-        LocalMusicSingle instance = new LocalMusicSingle();
+        if(instance==null){
+            instance = new LocalMusicSingle();
+        }
         instance.setMainActivity(localMusicActivity);
         return instance;
     }
@@ -55,6 +59,14 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
         return view;
     }
 
+    //更新状态
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mLocalMusicSingleListViewAdapter!=null){
+            mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
+        }
+    }
 
     private ListView mListView;
     private LocalMusicSingleListViewAdapter mLocalMusicSingleListViewAdapter;
@@ -93,6 +105,10 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.local_music_playall://播放全部,暂时默认从第一首开始
+                if(localMusicActivity.playService.getPlay_list()!= PlayService.ALL_MUSIC){
+                    localMusicActivity.playService.setMp3Infos(mMp3Infos);
+                    localMusicActivity.playService.setPlay_list(PlayService.ALL_MUSIC);
+                }
                 localMusicActivity.playService.play(0);
                 break;
             case R.id.local_music_select://多选
@@ -118,10 +134,13 @@ public class LocalMusicSingle extends Fragment implements View.OnClickListener,A
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(localMusicActivity.playService.getPlay_list()!= PlayService.ALL_MUSIC){
+            localMusicActivity.playService.setMp3Infos(mMp3Infos);
+            localMusicActivity.playService.setPlay_list(PlayService.ALL_MUSIC);
+        }
         if(position!=0&&localMusicActivity.playService!=null){
             localMusicActivity.playService.play(position-1);
-            //显示喇叭
-            //view.findViewById(R.id.local_music_single_horn).setVisibility(View.VISIBLE);
         }
+        mLocalMusicSingleListViewAdapter.notifyDataSetChanged();
     }
 }

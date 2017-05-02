@@ -1,14 +1,28 @@
 package com.android.netmusic.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
+import android.widget.RemoteViews;
 
 import com.android.netmusic.MusicApp;
+import com.android.netmusic.R;
+import com.android.netmusic.activity.MainActivity;
+import com.android.netmusic.constant.Constant;
 import com.android.netmusic.musicmodel.Mp3Info;
 import com.android.netmusic.utils.MediaUtils;
+import com.lidroid.xutils.db.sqlite.WhereBuilder;
+import com.lidroid.xutils.exception.DbException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,12 +41,22 @@ import java.util.concurrent.Executors;
  * 5，获取当前歌曲的进度
  */
 public class PlayService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener {
+    private static final String TAG = "playservice";
     private int currentPosition;//表示当前播放第几首歌
     private ArrayList<Mp3Info> mp3Infos = new ArrayList<>();
     private MediaPlayer mediaPlayer;
     private MusicUpdateListener musicUpdateListener;
     private Boolean isPause = false;//是否暂停
     private ExecutorService es = Executors.newSingleThreadExecutor();//线程池
+    private  MusicApp app;//全局应用程序
+
+    /**
+     * 以下是播放列表
+     */
+    public static final int ALL_MUSIC = 1;//顺序播放
+    public static final int RECENT_MUSIC = 2;//随机播放
+    public static final int LIKE_MUSIC = 3;//单曲循环
+    private int play_list =  ALL_MUSIC;
 
     /**
      * 以下是播放模式
@@ -42,8 +66,10 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
     public static final int SING_PLAY = 3;//单曲循环
     private int play_mode = ORDER_PLAY;//默认为顺序播放
     /**
-     * 以下是播放列表
+     * 自定义广播
      */
+    private MyReceiver myReceiver;//通知栏状态广播接收器
+    private EarReceiver mEarReceiver;//耳机状态广播接收器
 
     /**
      * 随机数
@@ -59,30 +85,54 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         super.onCreate();
         System.out.println("Service has create");
         //获得MusicApp的实例
-        MusicApp app = (MusicApp) getApplication();
-        //读取上次推出保存的状态
-        currentPosition = app.sp.getInt("currentPosition", 0);
-        play_mode = app.sp.getInt("play_mode", PlayService.ORDER_PLAY);
+        app = (MusicApp) getApplication();
 
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(this);
         mediaPlayer.setOnErrorListener(this);
-        mp3Infos = MediaUtils.getMp3Infos(this);
+
+        //读取上次推出保存的状态
+        currentPosition = app.sp.getInt(Constant.currentposition, 0);
+        play_mode = app.sp.getInt(Constant.play_mode, PlayService.ORDER_PLAY);
+        play_list = app.sp.getInt(Constant.play_list,PlayService.ALL_MUSIC);
+        if(play_list==ALL_MUSIC){
+            mp3Infos = MediaUtils.getMp3Infos(this);
+        }else{
+            mp3Infos = MediaUtils.getRecentMusic(this);
+        }
         es.execute(updateStatusRunnable);
+
+
         //注册广播
-//        MyReceiver myReceiver = new MyReceiver();
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("prev");
-//        intentFilter.addAction("next");
-//        intentFilter.addAction("play_state");
-//        registerReceiver(myReceiver, intentFilter);
+        //状态栏状态
+        myReceiver = new MyReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("prev");
+        intentFilter.addAction("next");
+        intentFilter.addAction("play_state");
+        registerReceiver(myReceiver, intentFilter);
+        //耳机状态
+        mEarReceiver = new EarReceiver();
+        IntentFilter intentFilter1 = new IntentFilter();
+        registerReceiver(mEarReceiver,intentFilter1);
     }
 
+    /**
+     * 退出时保存状态
+     */
+    private void saveState(){
+        SharedPreferences.Editor editor = app.sp.edit();
+        editor.putInt(Constant.currentposition,currentPosition);
+        editor.putInt(Constant.play_mode,play_mode);
+        editor.putInt(Constant.play_list,play_list);
+        editor.commit();
+    }
     /**
      * 关掉服务
      */
     @Override
     public void onDestroy() {
+        System.out.println("测试,看看你被kill了没");
         super.onDestroy();
         if (es != null && !es.isShutdown()) {
             es.shutdown();
@@ -91,6 +141,9 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         mediaPlayer = null;
         mp3Infos = null;
         musicUpdateListener = null;
+        //取消广播绑定
+        unregisterReceiver(myReceiver);
+        unregisterReceiver(mEarReceiver);
         System.out.println("Service has destroy");
     }
 
@@ -179,6 +232,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             position = 0;
         }
         if(mp3Infos.size()>0){
+            saveRecentPlay(position);
             Mp3Info mp3Info = mp3Infos.get(position);
             mediaPlayer.reset();
             try {
@@ -194,7 +248,9 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 musicUpdateListener.onChange(currentPosition);
                 musicUpdateListener.onChangeForState(currentPosition);
             }
-            //showNotification();
+            //保存状态
+            saveState();
+            showNotification();
         }
     }
 
@@ -210,6 +266,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 musicUpdateListener.onChangeForState(currentPosition);
             }
         }
+        showNotification();
     }
 
     /**
@@ -224,6 +281,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
                 musicUpdateListener.onChangeForState(currentPosition);
             }
         }
+        showNotification();
     }
 
     /**
@@ -241,7 +299,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             currentPosition = random.nextInt(mp3Infos.size() - 1);
         }
         play(currentPosition);
-        //showNotification();
+        showNotification();
     }
 
     /**
@@ -259,7 +317,7 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
             currentPosition = random.nextInt(mp3Infos.size() - 1);
         }
         play(currentPosition);
-        //showNotification();
+        showNotification();
     }
 
     /**
@@ -435,73 +493,126 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         return true;
     }
 
-//    /**
-//     * 自定义广播，监控通知栏点击事件
-//     */
-//    public class MyReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            String action = intent.getAction();
-//            switch (action) {
-//                case "next":
-//                    next();
-//                    break;
-//                case "prev":
-//                    prev();
-//                    break;
-//                case "play_state":
-//                    if (isPlaying()) {
-//                        pause();
-//                    } else {
-//                        start();
-//                    }
-//                    break;
-//            }
-//        }
-//    }
+    public void remove(int position){
+        mp3Infos.remove(position);
+    }
 
-//    /**
-//     * 设置前台服务通知
-//     */
-//    public void showNotification() {
-//        if(mp3Infos.size()>0){
-//            Mp3Info mp3Info = mp3Infos.get(currentPosition);
-//            Notification.Builder builder = new Notification.Builder(this);
-//            builder.setContentText(mp3Info.getMediaName());
-//            builder.setContentTitle(mp3Info.getMediaArtist());
-//            Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
-//            builder.setSmallIcon(R.mipmap.ic_notification);
-//            builder.setWhen(0);
-//            builder.setTicker(mp3Info.getMediaName());
-//            //添加自定义View
-//            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification_view);
-//            remoteViews.setImageViewBitmap(R.id.notification_ablum, bitmap);
-//            remoteViews.setTextViewText(R.id.notification_title, mp3Info.getMediaName());
-//            remoteViews.setTextViewText(R.id.notification_artist, mp3Info.getMediaArtist());
-//            builder.setOngoing(true);//设置为常驻通知
-//            builder.setAutoCancel(false);//不自动清除
-//            builder.setContent(remoteViews);
-//            if (isPlaying()) {
-//                remoteViews.setImageViewResource(R.id.notification_play_state, R.mipmap.btn_playback_pause);
-//            } else {
-//                remoteViews.setImageViewResource(R.id.notification_play_state, R.mipmap.btn_playback_play);
-//            }
-//
-//
-//            //设置通知栏点击事件
-//            PendingIntent next = PendingIntent.getBroadcast(this, 0, new Intent("next"), 0);
-//            remoteViews.setOnClickPendingIntent(R.id.notification_next, next);
-//            PendingIntent prev = PendingIntent.getBroadcast(this, 0, new Intent("prev"), 0);
-//            remoteViews.setOnClickPendingIntent(R.id.notification_play_prev, prev);
-//            PendingIntent play_state = PendingIntent.getBroadcast(this, 0, new Intent("play_state"), 0);
-//            remoteViews.setOnClickPendingIntent(R.id.notification_play_state, play_state);
-//
-//            builder.setAutoCancel(false);
-//            Intent intent = new Intent(this, MainActivity.class);
-//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-//            builder.setContentIntent(pendingIntent);
-//            Notification notification = builder.build();
-//            startForeground(1, notification);
-//        }
-//    }
+    /**
+     * 播放列表
+     */
+    public void setPlay_list(int play_list){
+        this.play_list = play_list;
+    }
+
+    public int getPlay_list(){
+        return this.play_list;
+    }
+
+    /**
+     * 随机播放
+     */
+    public void random(){
+        currentPosition = random.nextInt(mp3Infos.size());
+        play(currentPosition);
+        play_mode = RANDOM_PLAY;
+    }
+
+    /**
+     * 保存最近
+     * @param currentPosition
+     */
+    public void saveRecentPlay(int currentPosition){
+        Mp3Info mp3Info = mp3Infos.get(currentPosition);
+        try {
+            Mp3Info tempMp3Info = MusicApp.dbUtilsRecord.findFirst(Mp3Info.class, WhereBuilder.b("mediaName","=",mp3Info.getMediaName()));
+            if(tempMp3Info==null){
+                MusicApp.dbUtilsRecord.save(mp3Info);
+            }
+            Log.d(TAG,"saveRecentPlayOk");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 自定义广播，监控通知栏点击事件
+     */
+    public class MyReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case "next":
+                    next();
+                    break;
+                case "prev":
+                    prev();
+                    break;
+                case "play_state":
+                    if (isPlaying()) {
+                        pause();
+                    } else {
+                        start();
+                    }
+                    break;
+
+            }
+        }
+    }
+
+    /**
+     * 自定义广播,监控耳机状态(暂未实现)
+     */
+    public class EarReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+        }
+    }
+
+    /**
+     * 设置前台服务通知
+     */
+    public void showNotification() {
+        if(mp3Infos.size()>0){
+            Mp3Info mp3Info = mp3Infos.get(currentPosition);
+            Notification.Builder builder = new Notification.Builder(this);
+            builder.setContentText(mp3Info.getMediaName());
+            builder.setContentTitle(mp3Info.getMediaArtist());
+            Bitmap bitmap = MediaUtils.getArtwork(this, mp3Info.getMediaId(), mp3Info.getMediaAblumId(), true, false);
+            builder.setSmallIcon(R.mipmap.ic_notification);
+            builder.setWhen(0);
+            builder.setTicker(mp3Info.getMediaName());
+            //添加自定义View
+            RemoteViews remoteViews = new RemoteViews(getPackageName(), R.layout.notification_view);
+            remoteViews.setImageViewBitmap(R.id.notification_ablum, bitmap);
+            remoteViews.setTextViewText(R.id.notification_title, mp3Info.getMediaName());
+            remoteViews.setTextViewText(R.id.notification_artist, mp3Info.getMediaArtist());
+            builder.setOngoing(true);//设置为常驻通知
+            builder.setAutoCancel(false);//不自动清除
+            builder.setContent(remoteViews);
+            if (isPlaying()) {
+                remoteViews.setImageViewResource(R.id.notification_play_state, R.mipmap.ic_box_pause);
+            } else {
+                remoteViews.setImageViewResource(R.id.notification_play_state, R.mipmap.ic_box_play);
+            }
+
+
+            //设置通知栏点击事件
+            PendingIntent next = PendingIntent.getBroadcast(this, 0, new Intent("next"), 0);
+            remoteViews.setOnClickPendingIntent(R.id.notification_next, next);
+            PendingIntent prev = PendingIntent.getBroadcast(this, 0, new Intent("prev"), 0);
+            remoteViews.setOnClickPendingIntent(R.id.notification_play_prev, prev);
+            PendingIntent play_state = PendingIntent.getBroadcast(this, 0, new Intent("play_state"), 0);
+            remoteViews.setOnClickPendingIntent(R.id.notification_play_state, play_state);
+
+            builder.setAutoCancel(false);
+            Intent intent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+            builder.setContentIntent(pendingIntent);
+            Notification notification = builder.build();
+            startForeground(1, notification);
+        }
+    }
 }

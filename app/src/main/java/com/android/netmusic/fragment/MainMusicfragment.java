@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.android.netmusic.R;
+import com.android.netmusic.activity.LikeActivity;
 import com.android.netmusic.activity.LocalMusicActivity;
 import com.android.netmusic.activity.MainActivity;
+import com.android.netmusic.activity.RecentPlayActivity;
 
 
 /**
@@ -22,6 +24,7 @@ import com.android.netmusic.activity.MainActivity;
 public class MainMusicfragment  extends Fragment implements View.OnClickListener{
 
     private MainActivity mMainActivity;
+    private static MainMusicfragment instance;
 
     /**
      * 单例
@@ -29,7 +32,9 @@ public class MainMusicfragment  extends Fragment implements View.OnClickListener
      * @return
      */
     public static MainMusicfragment getInstance(MainActivity mainActivity){
-        MainMusicfragment instance = new MainMusicfragment();
+        if(instance==null){
+            instance = new MainMusicfragment();
+        }
         instance.setMainActivity(mainActivity);
         return instance;
     }
@@ -59,9 +64,17 @@ public class MainMusicfragment  extends Fragment implements View.OnClickListener
     //PS，如非必须，请不要修改其他代码,如果非得修改，请注释原因                                      //
     //////////////////////////////////////////////////////////////////////////////////////////////
     private LinearLayout local_music;
+    private LinearLayout recent_music;
+    private LinearLayout like_music;
     private void init(View view){
         local_music = (LinearLayout) view.findViewById(R.id.music_local_music);
         local_music.setOnClickListener(this);
+
+        recent_music = (LinearLayout)view.findViewById(R.id.recent_music);
+        recent_music.setOnClickListener(this);
+
+        like_music = (LinearLayout)view.findViewById(R.id.like_music);
+        like_music.setOnClickListener(this);
     }
 
     @Override
@@ -70,6 +83,16 @@ public class MainMusicfragment  extends Fragment implements View.OnClickListener
             case R.id.music_local_music:
                 Intent intent = new Intent(mMainActivity,LocalMusicActivity.class);
                 startActivity(intent);
+                mMainActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                break;
+            case R.id.recent_music:
+                Intent intent1 = new Intent(mMainActivity,RecentPlayActivity.class);
+                startActivity(intent1);
+                mMainActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                break;
+            case R.id.like_music:
+                Intent intent2 = new Intent(mMainActivity, LikeActivity.class);
+                startActivity(intent2);
                 mMainActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
         }

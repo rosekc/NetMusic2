@@ -11,14 +11,18 @@ import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 
+import com.android.netmusic.MusicApp;
 import com.android.netmusic.R;
 import com.android.netmusic.musicmodel.Mp3Info;
+import com.lidroid.xutils.db.sqlite.Selector;
+import com.lidroid.xutils.exception.DbException;
 
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -33,6 +37,41 @@ public class MediaUtils {
     private static final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
 
 
+    /**
+     * 获取收藏列表
+     * @param context
+     * @return
+     */
+    public static ArrayList<Mp3Info> getLikeMusic(Context context){
+        ArrayList<Mp3Info> mMp3Infos = new ArrayList<>();
+        try {
+            List<Mp3Info> tempMp3Infos = MusicApp.dbUtilsLike.findAll(Selector.from(Mp3Info.class));
+            if(tempMp3Infos!=null){
+                mMp3Infos = new ArrayList<>(tempMp3Infos);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return mMp3Infos;
+    }
+
+    /**
+     * 获取最近播放列表
+     * @param context
+     * @return
+     */
+    public static ArrayList<Mp3Info> getRecentMusic(Context context){
+        ArrayList<Mp3Info> mMp3Infos = new ArrayList<>();
+        try {
+            List<Mp3Info> tempMp3Infos = MusicApp.dbUtilsRecord.findAll(Selector.from(Mp3Info.class));
+            if(tempMp3Infos!=null){
+                mMp3Infos = new ArrayList<>(tempMp3Infos);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return mMp3Infos;
+    }
     /**
      * 获取多个MP3信息
      *

@@ -155,5 +155,10 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center|left</item>
         <item name="android:textSize">14dp</item>
+
+    <!--播放列表POPWINDOW的动画-->
+    <style name="current_play_list_anim">
+        <item name="android:windowEnterAnimation">@anim/current_play_list_open</item>
+        <item name="android:windowExitAnimation">@anim/current_play_list_close</item>
     </style>
 </resources>

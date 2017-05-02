@@ -15,11 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <!--<include-->
-        <!--layout="@layout/play_bar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:layout_constraintBottom_toBottomOf="@id/main_view_page"-->
-        <!--/>-->
+    <include
+        layout="@layout/play_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/main_view_page"
+        />
 
 </android.support.constraint.ConstraintLayout>
