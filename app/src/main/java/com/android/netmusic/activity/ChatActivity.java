@@ -1,14 +1,15 @@
 package com.android.netmusic.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,6 @@ import android.widget.SimpleAdapter;
 import com.android.netmusic.R;
 import com.android.netmusic.adapter.ChatMsgAdapter;
 import com.android.netmusic.utils.InputMethodUtils;
-import com.hyphenate.EMCallBack;
 import com.hyphenate.EMMessageListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
@@ -40,8 +40,12 @@ import java.util.regex.Pattern;
 
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiId;
 import static com.android.netmusic.adapter.ChatMsgAdapter.emojiName;
+import static com.android.netmusic.constant.Constant.MSG_LIST_UPDATE;
 
-public class ChatActivity extends AppCompatActivity {
+/**
+ * 聊天页面
+ */
+public class ChatActivity extends BaseActivity {
     private EditText msgEditText;
     private ImageView showEmoiconImageView;
     private Button sendBtn;
@@ -52,27 +56,33 @@ public class ChatActivity extends AppCompatActivity {
     private ChatMsgAdapter chatMsgAdapter;
 
 
-    private EditText editContactName;
-
-//    private int[] emoji = {R.mipmap.emoji_1f600, R.mipmap.emoji_1f601, R.mipmap.emoji_1f602,
-//            R.mipmap.emoji_1f603, R.mipmap.emoji_1f604, R.mipmap.emoji_1f605, R.mipmap.emoji_1f606,
-//            R.mipmap.emoji_1f607, R.mipmap.emoji_1f608, R.mipmap.emoji_1f609, R.mipmap.emoji_1f610,
-//            R.mipmap.emoji_1f611, R.mipmap.emoji_1f612, R.mipmap.emoji_1f612, R.mipmap.emoji_1f614,
-//            R.mipmap.emoji_1f615, R.mipmap.emoji_1f616, R.mipmap.emoji_1f617, R.mipmap.emoji_1f618,
-//            R.mipmap.emoji_1f619, R.mipmap.emoji_1f620, R.mipmap.emoji_352, R.mipmap.emoji_353,
-//            R.mipmap.emoji_354, R.mipmap.emoji_355, R.mipmap.emoji_356, R.mipmap.emoji_357,
-//            R.mipmap.emoji_delete};
-//    private String[] emojiName = {"[emoji_1f600]", "[emoji_1f601]", "[emoji_1f602]", "[emoji_1f603]", " [emoji_1f604]",
-//            "[emoji_1f605]", "[emoji_1f606]", "[emoji_1f607]", "[emoji_1f608]", "[emoji_1f609]", "[emoji_1f610]",
-//            "[emoji_1f611]", "[emoji_1f612]", "[emoji_1f612]", "[emoji_1f614]", "[emoji_1f615]", "[emoji_1f616]",
-//            "[emoji_1f617]", "[emoji_1f618]", "[emoji_1f619]", "[emoji_1f620]", "[emoji_352]", "[emoji_353]", "[emoji_354]",
-//            "[emoji_355]", "[emoji_356]", "[emoji_357]", "[emoji_delete]"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        Intent intent = getIntent();
+        contactName = intent.getStringExtra("useraccount");
+
+        //设置ActionBar
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(contactName);
         init();
+    }
+
+    @Override
+    public void publish(int progress) {
+
+    }
+
+    @Override
+    public void change(int position) {
+
+    }
+
+    @Override
+    public void changeForState(int position) {
+
     }
 
     //聊天消息监听
@@ -84,7 +94,7 @@ public class ChatActivity extends AppCompatActivity {
             for (EMMessage message : messages) {
                 if (message.getUserName() == contactName) {
                     Message msg = mHandler.obtainMessage();
-                    msg.what = 0;
+                    msg.what = MSG_LIST_UPDATE;
                     msg.obj = message;
                     mHandler.sendMessage(msg);
                 }
@@ -149,9 +159,6 @@ public class ChatActivity extends AppCompatActivity {
         emoiconGridView.setOnItemClickListener(new OnEmojiClickListener());
         // 隐藏表情框
         hideEmotionPanel();
-
-
-        editContactName = (EditText) findViewById(R.id.edit_contactName);
     }
 
     /**
@@ -161,10 +168,7 @@ public class ChatActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 0:
-//                    EMMessage message = (EMMessage) msg.obj;
-//                    // 这里只是简单的demo，也只是测试文字消息的收发，所以直接将body转为EMTextMessageBody去获取内容
-//                    EMTextMessageBody body = (EMTextMessageBody) message.getBody();
+                case MSG_LIST_UPDATE:
                     // 将新的消息内容和时间加入到下边
                     //更新adapter中信息数据
                     chatMsgAdapter.notifyDataSetChanged();
@@ -185,18 +189,21 @@ public class ChatActivity extends AppCompatActivity {
         if (msgEditText.getText().toString().length() != 0) {
             //创建一条文本消息，content为消息文字内容，toChatUsername为对方用户或者群聊的id，后文皆是如此
             EMMessage message = EMMessage.createTxtSendMessage(msgEditText.getText().toString(), contactName);
-//如果是群聊，设置chattype，默认是单聊
+            //如果是群聊，设置chattype，默认是单聊
 
-//发送消息
+            //发送消息
             EMClient.getInstance().chatManager().sendMessage(message);
 
             Message msg = mHandler.obtainMessage();
-            msg.what = 0;
+            msg.what = MSG_LIST_UPDATE;
             msg.obj = message;
             mHandler.sendMessage(msg);
         }
     }
 
+    /**
+     * 删除文字或表情
+     */
     public void deleteMsg() {
         if (msgEditText.getText().length() != 0) {
             // 选择文本的游标位置 全选 或 部分选择 或没选
@@ -220,6 +227,12 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 判断是否删除表情
+     *
+     * @param cursor
+     * @return
+     */
     public boolean isDeletePng(int cursor) {
         String content = msgEditText.getText().toString().substring(0, cursor);
         if (content.length() >= emojiName[0].length()) {
@@ -243,13 +256,34 @@ public class ChatActivity extends AppCompatActivity {
                     sendMsg();
                     break;
                 case R.id.lqm_chat_iv_showemoicon:
-                    if(emoiconGridView.getVisibility() == View.VISIBLE){
+                    if (emoiconGridView.getVisibility() == View.VISIBLE) {
                         hideEmotionPanel();
-                    }else if(emoiconGridView.getVisibility() == View.GONE){
+                        showEmoiconImageView.setImageResource(R.mipmap.ic_keyboard);
+                    } else if (emoiconGridView.getVisibility() == View.GONE) {
                         showEmotionPanel();
-                    }
+                        //表情按钮
+                        showEmoiconImageView.setImageResource(R.mipmap.ic_showemoji);
+                      }
                     break;
             }
+        }
+    }
+
+    class MsgEditWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 
@@ -266,17 +300,16 @@ public class ChatActivity extends AppCompatActivity {
                 Drawable drawable = getResources().getDrawable(emojiId[position]);
                 //表情宽高大小
                 drawable.setBounds(0, 0, drawable.getIntrinsicWidth() * 4 / 5, drawable.getIntrinsicHeight() * 4 / 5);
-                // ��Ҫ������ı���emojiName[position]����Ҫ��������ı�
+                //需要处理的文本
                 SpannableString spannable = new SpannableString(emojiName[position]);
-                // Ҫ��ͼƬ���ָ�������־�Ҫ��ImageSpan
+                //使用ImageSpan替换指定文字
                 ImageSpan span = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
-                // ��ʼ�滻��ע���2�͵�3��������ʾ�����￪ʼ�滻�������滻������start��end��
-                // ���һ������������ѧ�еļ���,[5,12)��ʾ��5��12������5��������12
+                //开始替换
                 Log.i("Span", span.toString());
                 spannable.setSpan(span, 0, emojiName[position].length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 // contentEdit.setText(spannable);
-                int index = msgEditText.getSelectionStart();// ��ȡ�������λ��
-
+                int index = msgEditText.getSelectionStart();
+                //在指定文字位置插入图片
                 edit.insert(index, spannable);
                 // MainActivity.contentEdit.append(spannable);
             }
@@ -288,6 +321,9 @@ public class ChatActivity extends AppCompatActivity {
         return emoiconGridView.getVisibility() == View.VISIBLE;
     }
 
+    /**
+     * 显示表情面板
+     */
     public void showEmotionPanel() {
         emoiconGridView.removeCallbacks(mHideEmotionPanelTask);
         InputMethodUtils.updateSoftInputMethod(this, WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
@@ -296,6 +332,9 @@ public class ChatActivity extends AppCompatActivity {
         InputMethodUtils.hideKeyboard(getCurrentFocus());
     }
 
+    /**
+     * 隐藏表情面板
+     */
     public void hideEmotionPanel() {
         if (emoiconGridView.getVisibility() != View.GONE) {
             // showEmoiconImageView.setBackgroundResource(R.drawable.expression1);
@@ -304,6 +343,11 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 更新表情面板高度
+     *
+     * @param keyboardHeight
+     */
     public void updateEmotionPanelHeight(int keyboardHeight) {
         ViewGroup.LayoutParams params = emoiconGridView.getLayoutParams();
         if (params != null && params.height != keyboardHeight) {
@@ -326,26 +370,5 @@ public class ChatActivity extends AppCompatActivity {
         super.onDestroy();
         //移除监听
         EMClient.getInstance().chatManager().removeMessageListener(msgListener);
-        //异步退出账号
-        EMClient.getInstance().logout(true, new EMCallBack() {
-
-            @Override
-            public void onSuccess() {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onProgress(int progress, String status) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onError(int code, String message) {
-                // TODO Auto-generated method stub
-
-            }
-        });
     }
 }

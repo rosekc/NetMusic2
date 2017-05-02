@@ -7,4 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="default_keyboard_height">267dp</dimen>
+
+    <dimen name="tablayout_height">35dp</dimen>
 </resources>
