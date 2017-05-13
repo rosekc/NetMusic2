@@ -1,14 +1,24 @@
 package com.android.netmusic.fragment.musicmenu;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.netmusic.R;
+import com.android.netmusic.activity.ListActivity;
 import com.android.netmusic.activity.MainActivity;
+import com.android.netmusic.adapter.MyAdapter;
+import com.android.netmusic.fragment.musicmenu.view.MyGridView;
+import com.android.netmusic.musicmodel.ItemBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +27,8 @@ import com.android.netmusic.activity.MainActivity;
  */
 
 public class MenuFragment extends Fragment {
+
+    private MyGridView gview;
 
     private MainActivity mMainActivity;
     private static MenuFragment instance;
@@ -44,15 +56,91 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_musicmenu_menu,null);
+        final List<ItemBean> itemBeanList=new ArrayList<>();
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing2,//图片
+                "123455",//播放量
+                "djfkdl",
+                "就看到了国家队离开国家阿里看到"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing3,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing1,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing4,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing3,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing1,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        itemBeanList.add(new ItemBean(
+                R.mipmap.ic_musicmenusing2,
+                "1255",
+                "djfkd",
+                "就看到了国家队离开国"
+        ));
+        gview=(MyGridView)view.findViewById(R.id.gview);
+        gview.setAdapter(new MyAdapter(getActivity(),itemBeanList));
+        View v = (View)view.findViewById(R.id.LinearLayout_home);
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(),ListActivity.class);
+                startActivity(intent);
+            }
+        });
+        gview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
+            }
+        });
+        final TextView quanbu=(TextView)view.findViewById(R.id.button1);
+        final TextView oumei=(TextView)view.findViewById(R.id.button2);
+        final TextView dianzi=(TextView)view.findViewById(R.id.button3);
+        final TextView shuochang=(TextView)view.findViewById(R.id.button4);
+        oumei.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quanbu.setText(oumei.getText().toString());
+                gview.setAdapter(new MyAdapter(getActivity(),itemBeanList));
+            }
+        });
+        dianzi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quanbu.setText(dianzi.getText().toString());
+                gview.setAdapter(new MyAdapter(getActivity(),itemBeanList));
+            }
+        });
+        shuochang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                quanbu.setText(shuochang.getText().toString());
+                gview.setAdapter(new MyAdapter(getActivity(),itemBeanList));
+            }
+        });
         return view;
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////////////
-    //以下是各组员添加代码,添加代码注明功能,自己的姓名                                              //
-    //如果需要用到Layout中的资源，但是资源还没有命名id,请各位以下列格式命名，你的姓名_资源名称_资源功能 //
-    //例：jiaomenglei_textview_username,姓名:jiaomenglei,资源名称:textview,功能:显示用户名username //
-    //获取主Activity中的数据,直接调用mActivity                                                    //
-    //PS，如非必须，请不要修改其他代码,如果非得修改，请注释原因                                      //
-    //////////////////////////////////////////////////////////////////////////////////////////////
 
 }

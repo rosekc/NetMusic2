@@ -1,11 +1,1012 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--排行榜-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="排行榜"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/base_red" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:text="官方榜" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/listview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="650dp"
+                    android:layout_marginTop="5dp">
+
+                </ListView>
+            </LinearLayout>
+            <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/base_red" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
+                    android:text="全球榜" />
+            </LinearLayout>
+            <GridView
+                android:id="@+id/gridView"
+                android:numColumns="3"
+                android:layout_width="match_parent"
+                android:layout_height="1020dp"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="2dp"
+                android:columnWidth="125dp"
+                android:layout_marginTop="5dp">
+            </GridView>
+
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/base_red" />
+
+                    <TextView
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/black"
+                        android:text="用户榜" />
+                </LinearLayout>
+                <GridView
+                    android:id="@+id/gridView2"
+                    android:numColumns="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:verticalSpacing="10dp"
+                    android:horizontalSpacing="2dp"
+                    android:columnWidth="125dp"
+                    android:layout_marginTop="5dp">
+                </GridView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bg"
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/base_red" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:text="官方榜" />
+
+            </LinearLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <GridLayout
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:background="@mipmap/guan1">
+
+                    <TextView
+                        android:id="@+id/xin1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:paddingLeft="5dp"
+                        android:text="每天更新"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="230dp"
+                    android:layout_height="125dp"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/f11"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="1.尽头-赵方婧" />
+
+                    <TextView
+                        android:id="@+id/f12"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="2.认真的老去-张希/曹方" />
+
+                    <TextView
+                        android:id="@+id/f13"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="3.Privacy-Chris Brown" />
+                </GridLayout>
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/line11"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#9997"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <GridLayout
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:background="@mipmap/guan2">
+
+                    <TextView
+                        android:id="@+id/xin2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:paddingLeft="5dp"
+                        android:text="每天更新"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="230dp"
+                    android:layout_height="125dp"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/f21"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="1.高尚-薛之谦" />
+
+                    <TextView
+                        android:id="@+id/f22"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="2.大雁-马頔" />
+
+                    <TextView
+                        android:id="@+id/f23"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="3.Something Just Like This - The C..." />
+                </GridLayout>
+
+            </GridLayout>
+            <TextView
+                android:id="@+id/line12"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#9997"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <GridLayout
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:background="@mipmap/guan3">
+
+                    <TextView
+                        android:id="@+id/xin3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:paddingLeft="5dp"
+                        android:text="每周四更新"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="230dp"
+                    android:layout_height="125dp"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/f31"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="1.半身-燕池" />
+
+                    <TextView
+                        android:id="@+id/f32"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="2.大雁-马頔" />
+
+                    <TextView
+                        android:id="@+id/f33"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="3.阿和-崔开潮" />
+                </GridLayout>
+
+            </GridLayout>
+            <TextView
+                android:id="@+id/line13"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#9997"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <GridLayout
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:background="@mipmap/guan4">
+
+                    <TextView
+                        android:id="@+id/xin4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="100dp"
+                        android:paddingLeft="5dp"
+                        android:text="每周四更新"
+                        android:textSize="12dp"
+                        android:textColor="@color/white" />
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="230dp"
+                    android:layout_height="125dp"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/f41"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="1.高尚-薛之谦" />
+
+                    <TextView
+                        android:id="@+id/f42"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="2.刚好遇见你-李玉刚" />
+
+                    <TextView
+                        android:id="@+id/f43"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="15dp"
+                        android:text="3.大雁-马頔" />
+                </GridLayout>
+
+            </GridLayout>
+            <TextView
+                android:id="@+id/line14"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#9997"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp">
+
+                <GridLayout
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:background="@mipmap/guan5">
+
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="231dp"
+                    android:layout_height="125dp"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="39dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/f51"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="0.10"
+                            android:text="1.周杰伦" />
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="19dp"
+                            android:layout_height="18dp"
+                            android:layout_marginTop="15dp"
+                            app:srcCompat="@mipmap/hot"
+                            android:layout_weight="0.17" />
+
+                        <TextView
+                            android:id="@+id/hot1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.10"
+                            android:layout_marginTop="15dp"
+                            android:text="1621839" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/f52"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="0.10"
+                            android:text="2.薛之谦" />
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="17dp"
+                            android:layout_height="18dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="0.19"
+                            app:srcCompat="@mipmap/hot" />
+
+                        <TextView
+                            android:id="@+id/hot2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:text="1431559" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/f53"
+                            android:layout_width="64dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="15dp"
+                            android:text="3.陈奕迅" />
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="17dp"
+                            android:layout_height="18dp"
+                            android:layout_marginTop="15dp"
+                            app:srcCompat="@mipmap/hot"
+                            android:layout_weight="0.23" />
+
+                        <TextView
+                            android:id="@+id/hot3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="15dp"
+                            android:text="1180088" />
+                    </LinearLayout>
+
+                </GridLayout>
+
+            </GridLayout>
+            <TextView
+                android:id="@+id/line15"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#9997"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bg2"
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/base_red" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
+                    android:text="全球榜" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo1"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp" />
+
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo2" />
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.76"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="云音乐电音榜" />
+
+                <TextView
+                    android:id="@+id/all2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.15"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="UK排行榜" />
+
+                <TextView
+                    android:id="@+id/all3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.26"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="美国Billboard周榜" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton4"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo4" />
+
+                <ImageButton
+                    android:id="@+id/imageButton5"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo5" />
+
+                <ImageButton
+                    android:id="@+id/imageButton6"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo6" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="法国 NRJ Vos Hits \n周榜"
+                    android:layout_weight="0.14" />
+
+                <TextView
+                    android:id="@+id/all5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.15"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="iTunes榜" />
+
+                <TextView
+                    android:id="@+id/all6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.65"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="云音乐ACG榜"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton7"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo7" />
+
+                <ImageButton
+                    android:id="@+id/imageButton8"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo8" />
+
+                <ImageButton
+                    android:id="@+id/imageButton9"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo9" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.24"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="Beatport全球电子舞\n曲榜"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/all8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.72"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="日本Oricon周榜"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/all9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="云音乐古典音乐榜"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton10"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo10" />
+
+                <ImageButton
+                    android:id="@+id/imageButton11"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo11" />
+
+                <ImageButton
+                    android:id="@+id/imageButton12"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo12" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.76"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="Hit FM Top榜" />
+
+                <TextView
+                    android:id="@+id/all11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.15"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="KTV唛榜" />
+
+                <TextView
+                    android:id="@+id/all12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.42"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="台湾Hito排行榜" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton13"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo13" />
+
+                <ImageButton
+                    android:id="@+id/imageButton14"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo14" />
+
+                <ImageButton
+                    android:id="@+id/imageButton15"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo15" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.76"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="中国TOP排行榜（港台榜）" />
+
+                <TextView
+                    android:id="@+id/all14"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="中国TOP排行榜（内地榜）" />
+
+                <TextView
+                    android:id="@+id/all15"
+                    android:layout_width="126dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="香港电台中文歌曲龙虎榜" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton16"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo16" />
+
+                <ImageButton
+                    android:id="@+id/imageButton17"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo17" />
+
+                <ImageButton
+                    android:id="@+id/imageButton18"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/glo3" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.76"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="华语金曲榜" />
+
+                <TextView
+                    android:id="@+id/all17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.91"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="中国嘻哈榜" />
+
+                <TextView
+                    android:id="@+id/all18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.26"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="美国Billboard周榜" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bg3"
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/base_red" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/black"
+                    android:text="用户榜" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton19"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/use1" />
+
+                <ImageButton
+                    android:id="@+id/imageButton20"
+                    android:layout_width="125dp"
+                    android:layout_height="125dp"
+                    android:layout_marginRight="3dp"
+                    android:padding="0dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@mipmap/use2" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/all19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.29"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="音乐达人榜" />
+
+                <TextView
+                    android:id="@+id/all20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.91"
+                    android:textColor="@color/black"
+                    android:paddingLeft="3dp"
+                    android:paddingTop="3dp"
+                    android:text="音乐新人榜" />
+
+            </LinearLayout>
+        </LinearLayout>
+       <-->
+    </ScrollView>
+
 </LinearLayout>

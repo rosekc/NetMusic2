@@ -2,12 +2,357 @@
 <!--个性推荐-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/fragment_musicmenu_commend_viewpager"
+    android:layout_height="match_parent"
+    android:background="#fff">
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
 
-    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--轮播图-->
+        <com.android.netmusic.fragment.musicmenu.view.ImageBarnnerFramLayout
+            android:id="@+id/sunyanni_viewgroup_lunbo"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            ></com.android.netmusic.fragment.musicmenu.view.ImageBarnnerFramLayout>
+        <!--私人FM、每日歌曲推荐等-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="#fff">
+
+            <LinearLayout
+                android:id="@+id/line_fm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/recommmend_fm"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/commend_radio"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="私人FM" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line_daily"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recommmend_daily"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/commend_daily_02"
+                    android:text=""
+                    android:textColor="@color/base_red"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="每日歌曲推荐" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/line_rank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/recommmend_rank"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@mipmap/commend_rige"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:text="云音乐热歌榜" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--灰色分割线-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#F0F0F0" />
+
+        <LinearLayout
+            android:id="@+id/layout_gridview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:id="@+id/ont_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="推荐歌单"/>
+
+                <ImageButton
+                    android:id="@+id/imagebtn_more"
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#fff"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_01"
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:numColumns="3"
+                android:gravity="center"></GridView>
+
+           <!--<android.support.v7.widget.RecyclerView-->
+               <!--android:id="@+id/recylerview"-->
+               <!--android:layout_width="match_parent"-->
+               <!--android:layout_height="wrap_content"-->
+               <!--android:layout_marginTop="5dp"></android.support.v7.widget.RecyclerView>-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="独家放送"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#fff"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_02"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:numColumns="1"
+                android:gravity="center"></GridView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="最新音乐"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#fff"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_03"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:numColumns="3"
+                android:gravity="center"></GridView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="推荐MV"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#eeeeee"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_04"
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:numColumns="2"
+                android:gravity="center"></GridView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="精选专栏"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#fff"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_05"
+                android:layout_width="match_parent"
+                android:layout_height="270dp"
+                android:numColumns="1"
+                android:gravity="center"></GridView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="30dp"
+                    android:background="@color/base_red"
+                    android:layout_marginTop="10dp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="#fff"
+                    android:textSize="20dp"
+                    android:text="主播电台"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/commend_next"
+                    android:background="#fff"/>
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/gridview_06"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:numColumns="3"
+                android:gravity="center"></GridView>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="40dp"
+            android:background="#b3b5ba"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="现在可以根据个人喜好，自由调整首页栏目顺序啦"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:textColor="#515658"/>
+
+        <Button
+            android:id="@+id/commend_tiaozheng"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/commend_tiaozheng"
+            android:text="调整栏目顺序"
+            android:gravity="center"
+            android:textColor="#cd3c3d"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="80dp" />
+
+    </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

@@ -134,5 +134,6 @@
 
         <activity android:name=".activity.RecentPlayActivity"/>
         <activity android:name=".activity.LikeActivity"/>
+        <activity android:name=".activity.ListActivity"/>
     </application>
 </manifest>
